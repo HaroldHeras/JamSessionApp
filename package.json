@@ -1,0 +1,24 @@
+{
+  "name": "jamsession",
+  "version": "1.0.0",
+  "description": "Aplicacion para uso en JamSessions musicales",
+  "homepage": "https://github.com/HaroldHeras/JamSession#readme",
+  "bugs": {
+    "url": "https://github.com/HaroldHeras/JamSession/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaroldHeras/JamSession.git"
+  },
+  "license": "ISC",
+  "author": "Harold de las Heras",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
