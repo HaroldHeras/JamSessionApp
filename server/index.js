@@ -26,8 +26,43 @@ app.disable("x-powered-by");
 app.use(express.json());
 
 
+
+
+
+
+
 app.use(express.static(angularPath))
 
+
+
+app.post("/autenticacion", (req,res)=>{
+
+    const {password} = req.body;
+
+    if(password===pass){
+      permitido===true
+
+      return res.status(200).json({message: "Contraseña correcta"})
+    }else{
+
+      permitido===false;
+      
+      return res.status(401).json({message: "Contraseña incorrecta"})
+
+    }  
+
+
+})
+
+
+app.get("/autenticacion",(req,res)=>{
+
+
+    res.json({authorization: permitido});
+
+
+
+})
 
 
 
@@ -152,6 +187,7 @@ app.use(express.static(angularPath))
 
 
 app.use((req, res) => {
+
   res.sendFile(path.join(angularPath, "index.html"));
 });
 
