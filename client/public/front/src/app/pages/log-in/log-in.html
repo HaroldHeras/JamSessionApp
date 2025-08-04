@@ -1,3 +1,11 @@
-<p> Controlador Jam Harold</p>
-<input class="input-password" placeholder="Escriba aqui la contraseña de acceso">
-<button class="boton-iniciar-servicio">Iniciar Servicio</button>
+<p> Acceso Jam</p>
+
+<input #nombreUsuario class="input-username"   placeholder="Nombre Usuario"><br>
+
+<input #password class="input-password" type="password"  placeholder="Escriba aqui la contraseña de acceso">
+
+<button (click)="logIn(nombreUsuario.value, password.value)" class="boton-iniciar-servicio">Iniciar Servicio</button>
+
+
+<p *ngIf="acceso===true" style="color:green">{{mensaje}}</p>
+<p *ngIf="acceso===false" style="color:red">{{mensaje}}</p>

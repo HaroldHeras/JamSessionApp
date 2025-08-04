@@ -4,18 +4,33 @@ import express from "express";
 
 import path from "path"
 import { fileURLToPath } from "node:url";
+import dotenv from "dotenv";
+import { UserRepository } from "../ddbb/user-repository.js";
 
-const port = process.env.PORT || 1234;
+
+
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+dotenv.config({path: __dirname + "/.env"});
+
+
+
+
+const {
+  PORT = 1234,
+  SECRET_JWT_KEY = "VALOR POR DEFECTO"
+} = process.env;
+
+
 
 const angularPath = path.join(__dirname, "../client/public/front/dist/front/browser");
 
-const pass = "HaroldJam";    
-let permitido = false;    
-
+const permitido=false;
+const pass = "HaroldJam"
 
 
 
@@ -26,28 +41,57 @@ app.disable("x-powered-by");
 app.use(express.json());
 
 
-
-
-
-
-
 app.use(express.static(angularPath))
 
 
 
+app.get("/user-repository",(req,res)=>{
+
+
+  const primerUsuario = UserRepository.getPrimerUsuario();
+
+
+  res.status(200).json(primerUsuario);
+
+
+})  
+
+
+app.post("/user-repository", async (req,res)=>{
+
+
+  const usuarioNuevo = req.body;
+
+  try{
+
+    const idUsuarioNuevo = await UserRepository.creaUsuario(usuarioNuevo)  
+
+    res.status(200).json({idUsuarioNuevo});
+
+  }catch(error){
+    res.status(400).send(error.message);
+  } 
+
+
+})  
+
+
 app.post("/autenticacion", (req,res)=>{
 
+  
+
     const {password} = req.body;
+
 
     if(password===pass){
       permitido===true
 
-      return res.status(200).json({message: "Contraseña correcta"})
+      return res.status(200).json({ok: true})
     }else{
 
       permitido===false;
       
-      return res.status(401).json({message: "Contraseña incorrecta"})
+      return res.status(401).json({ok: false})
 
     }  
 
@@ -62,6 +106,13 @@ app.get("/autenticacion",(req,res)=>{
 
 
 
+})
+
+
+app.post("/register",(req,res)=>{
+  console.log(req.body)
+  console.log(process.env)
+  res.status(200);
 })
 
 
@@ -193,6 +244,6 @@ app.use((req, res) => {
 
 
 
-app.listen(port, ()=>{
-    console.log(`Todo listo en el puerto ${port}`);
+app.listen(PORT, ()=>{
+    console.log(`Todo listo en el puerto ${PORT}`);
 });

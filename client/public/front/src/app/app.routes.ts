@@ -6,9 +6,13 @@ import { Musico } from './pages/musico/musico';
 import { Espectador } from './pages/espectador/espectador';
 import { NotFound } from './pages/not-found/not-found';
 import { authGuard } from './guards/auth-guard';
+import { Register } from './pages/register/register';
+import { loginGuard } from './guards/login-guard';
+
 
 export const routes: Routes = [
-    {path: "LogIn", component: LogIn},
+    {path:"register", component: Register},
+    {path: "login", canActivate:[loginGuard], component: LogIn},
     {path: "", canActivate : [authGuard], component: Home},
     {path: "jamController", canActivate : [authGuard], component: JamController},
     {path: "musico", canActivate : [authGuard], component: Musico},
@@ -17,3 +21,5 @@ export const routes: Routes = [
 
 
 ];
+
+

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,20 +8,24 @@ import { Observable } from 'rxjs';
 export class Auth {
 
 
+
+
     constructor(private http: HttpClient){}
 
 
-    autenticacion():Observable<boolean>{
-
-        let permitido: any;
+    async autenticacion():Promise<boolean>{
 
 
-        this.http.get<{authorization:boolean}>("/autenticacion").subscribe({
 
-          next: datos => console.log(datos)//permitido = datos.authorization
-        })
+      const permitido = await firstValueFrom(this.http.get<{authorization:boolean}>("/autenticacion"))
 
-        return permitido;
+        
+      return permitido.authorization;
+       
+        
+         
+
+        
        
 
     }
@@ -33,24 +37,27 @@ export class Auth {
 
 
 
-    logIn(clave:string): Observable<any> {
+    async logIn(clave:string): Promise<any> {
 
         let respuesta: any;
 
+        try{
 
-        this.http.post("/autenticacion", {clave}).subscribe({
+          respuesta = await firstValueFrom(this.http.post("/autenticacion", {password:clave}));
 
-          next: datos => respuesta = datos
+         
 
-
-        })
-
-        return respuesta.message;
+          return respuesta;
 
 
+
+        }catch(error){
+
+          return error;        
+        
+        } 
 
     }
-
 
   
 }

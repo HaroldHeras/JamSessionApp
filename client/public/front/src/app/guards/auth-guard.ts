@@ -1,18 +1,21 @@
 import { CanActivateFn } from '@angular/router';
 import { Auth } from '../services/auth/auth';
 import { Router } from '@angular/router';
-import { inject, Injectable} from '@angular/core';
+import { inject} from '@angular/core';
+import { map } from 'rxjs';
 
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = async(route, state) => {
 
 
   const authService = inject(Auth);
   const router = inject(Router);
 
-  const permitido = authService.autenticacion();
 
   
+
+  const permitido = await authService.autenticacion()
+
 
   if(!permitido){
 
