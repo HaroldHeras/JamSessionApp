@@ -20,9 +20,9 @@ export class Register {
   resultadoRegistroBoolean:boolean | null = null;
 
 
-  async registroUsuario(username:string, password:string, passwordRepe:string){
+  async registroSuperUsuario(username:string, password:string, passwordRepe:string){
 
-
+    
     try{
 
       if(password!==passwordRepe){
@@ -33,7 +33,7 @@ export class Register {
 
       }
       
-      const usuario = {username, password};
+      const usuario = {username, password, superUsuario:true};
 
       const respuesta = await fetch("/user-repository", {
         method: "POST",

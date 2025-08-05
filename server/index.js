@@ -45,13 +45,17 @@ app.use(express.static(angularPath))
 
 
 
-app.get("/user-repository",(req,res)=>{
+app.get("/superUsuario",(req,res)=>{
 
 
-  const primerUsuario = UserRepository.getPrimerUsuario();
+  const superUsuario = UserRepository.getSuperUsuario();
+
+  if(superUsuario)  res.status(200).json({superUsuario : superUsuario.username});
+
+  if(!superUsuario) res.status(204).send("No hay superusuario")
 
 
-  res.status(200).json(primerUsuario);
+
 
 
 })  
@@ -62,11 +66,12 @@ app.post("/user-repository", async (req,res)=>{
 
   const usuarioNuevo = req.body;
 
+
   try{
 
     const idUsuarioNuevo = await UserRepository.creaUsuario(usuarioNuevo)  
 
-    res.status(200).json({idUsuarioNuevo});
+    res.status(201).json({idUsuarioNuevo});
 
   }catch(error){
     res.status(400).send(error.message);

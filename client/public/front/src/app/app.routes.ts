@@ -8,10 +8,11 @@ import { NotFound } from './pages/not-found/not-found';
 import { authGuard } from './guards/auth-guard';
 import { Register } from './pages/register/register';
 import { loginGuard } from './guards/login-guard';
+import { registerGuard } from './guards/register-guard';
 
 
 export const routes: Routes = [
-    {path:"register", component: Register},
+    {path:"register", canActivate:[registerGuard], component: Register},
     {path: "login", canActivate:[loginGuard], component: LogIn},
     {path: "", canActivate : [authGuard], component: Home},
     {path: "jamController", canActivate : [authGuard], component: JamController},

@@ -2,10 +2,10 @@
 <p>Nombre de usuario</p><br>
 <input #username class="input-usuario" type="string"  placeholder="Nombre Usuario"><br>
 <p>Contraseña</p><br>
-<input #password class="input-contraseña" type="string"  placeholder="Contraseña"><br>
+<input #password class="input-contraseña" type="password"  placeholder="Contraseña"><br>
 <p>Repita Contraseña</p><br>
-<input #passwordRepe class="input-repite-contraseña" type="string" placeholder="Repita Contraseña"><br>
-<button (click)="registroUsuario(username.value, password.value, passwordRepe.value)" class="boton-registrar">Registrar</button>
+<input #passwordRepe class="input-repite-contraseña" type="password" placeholder="Repita Contraseña"><br>
+<button (click)="registroSuperUsuario(username.value, password.value, passwordRepe.value)" class="boton-registrar">Registrar</button>
 
 <p *ngIf="resultadoRegistroBoolean===false" style="color:red">{{resultadoRegistroMensaje}}</p>
 <p *ngIf="resultadoRegistroBoolean===true" style="color:green">{{resultadoRegistroMensaje}}</p>

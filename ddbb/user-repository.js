@@ -11,6 +11,7 @@ const {Schema} = new DBLocal({path: "./ddbb"});
 
 const User = Schema("User", {
 
+    superUsuario:{type:Boolean, required:true, default:false},
     _id:{type: String, required: true},
     username: {type: String, required: true},
     password: {type: String, required: true}
@@ -22,7 +23,7 @@ const User = Schema("User", {
 
 export class UserRepository{
 
-    static async creaUsuario({username, password}){
+    static async creaUsuario({username, password, superUsuario=false}){
 
         try{
 
@@ -38,6 +39,7 @@ export class UserRepository{
             const id = crypto.randomUUID();
 
             User.create({
+                superUsuario,
                 _id: id,
                 username,
                 password : passwordEncriptada
@@ -80,14 +82,10 @@ export class UserRepository{
 
 
 
-    static getPrimerUsuario(){
+    static getSuperUsuario(){
 
 
-        const user = User.find();
-
-
-        if(!user) return false;
-        
+        const user = User.findOne({superUsuario: true});        
         
 
         return user;

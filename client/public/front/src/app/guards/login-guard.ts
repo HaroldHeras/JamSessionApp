@@ -1,6 +1,5 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject} from '@angular/core';
-import { RegisterService } from '../services/register/register-service';
 
 
 export const loginGuard: CanActivateFn = async (route, state) => {
@@ -9,31 +8,19 @@ export const loginGuard: CanActivateFn = async (route, state) => {
       const router = inject(Router);
 
 
-      const existeSuperUsuario = await fetch("/user-repository");
+      const respuesta = await fetch("/superUsuario");
 
-
-      const resultado = await existeSuperUsuario.json();
-
-      if(resultado.length!==0){
-
-        return true;
-      }else{
+      if(respuesta.status===204){
 
         router.navigate(["/register"]);
 
         return false;
-      }
 
-
-      
-      
-
-
-      
+      } 
+        
+        
+      return true;
 
 
 
-
-
-  return true;
 };
