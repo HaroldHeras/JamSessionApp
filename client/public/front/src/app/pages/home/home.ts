@@ -14,6 +14,8 @@ export class Home {
 
   redirige(event: Event){
 
+    console.log("Esto es una cooki", document.cookie);
+
     const elemento = event.target as HTMLElement;
 
     console.log("Este es el elemento: ", elemento)

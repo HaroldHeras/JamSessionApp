@@ -9,16 +9,17 @@ import { authGuard } from './guards/auth-guard';
 import { Register } from './pages/register/register';
 import { loginGuard } from './guards/login-guard';
 import { registerGuard } from './guards/register-guard';
+import { jamControllerGuard } from './guards/jam-controller-guard';
 
 
 export const routes: Routes = [
     {path:"register", canActivate:[registerGuard], component: Register},
     {path: "login", canActivate:[loginGuard], component: LogIn},
-    {path: "", canActivate : [authGuard], component: Home},
-    {path: "jamController", canActivate : [authGuard], component: JamController},
-    {path: "musico", canActivate : [authGuard], component: Musico},
-    {path: "espectador", canActivate : [authGuard], component: Espectador},
-    {path: "**", canActivate : [authGuard], component: NotFound},
+    {path: "",  component: Home},
+    {path: "jamController", canActivate:[jamControllerGuard], component: JamController},
+    {path: "musico", component: Musico},
+    {path: "espectador",  component: Espectador},
+    {path: "**",  component: NotFound},
 
 
 ];

@@ -6,6 +6,8 @@ import path from "path"
 import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
 import { UserRepository } from "../ddbb/user-repository.js";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
 
 
@@ -29,8 +31,7 @@ const {
 
 const angularPath = path.join(__dirname, "../client/public/front/dist/front/browser");
 
-const permitido=false;
-const pass = "HaroldJam"
+
 
 
 
@@ -39,26 +40,13 @@ const app = express();
 app.disable("x-powered-by");
 
 app.use(express.json());
+app.use(cookieParser());
 
 
 app.use(express.static(angularPath))
 
 
 
-app.get("/superUsuario",(req,res)=>{
-
-
-  const superUsuario = UserRepository.getSuperUsuario();
-
-  if(superUsuario)  res.status(200).json({superUsuario : superUsuario.username});
-
-  if(!superUsuario) res.status(204).send("No hay superusuario")
-
-
-
-
-
-})  
 
 
 app.post("/user-repository", async (req,res)=>{
@@ -81,33 +69,80 @@ app.post("/user-repository", async (req,res)=>{
 })  
 
 
-app.post("/autenticacion", (req,res)=>{
+
+app.get("/superUsuario",(req,res)=>{
+
+
+  const superUsuario = UserRepository.getSuperUsuario();
+
+  if(superUsuario)  res.status(200).json({superUsuario : superUsuario.username});
+
+  if(!superUsuario) res.status(204).send("No hay superusuario")
+
+
+
+
+})  
+
+
+app.post("/login", async (req,res)=>{
 
   
+    const {username, password} = req.body;
 
-    const {password} = req.body;
+    try{
+
+      const usuarioVerificado = await UserRepository.logIn({username, password});
+      const token = jwt.sign({id:usuarioVerificado._id, username: usuarioVerificado.username}, SECRET_JWT_KEY, {expiresIn: "1d"});
 
 
-    if(password===pass){
-      permitido===true
+      res.status(200).cookie("control_token", token,{
+        httpOnly: true,
+        secure: true,
+        sameSite:"strict",
+        maxAge: 1000 * 60 * 60 * 24
+      })
+      .send({ok:true, usuarioVerificado, token});
 
-      return res.status(200).json({ok: true})
-    }else{
+    }catch(error){
 
-      permitido===false;
-      
-      return res.status(401).json({ok: false})
+      res.status(401).json({ok: false, message: error.message});
 
-    }  
+    }
+
+
+
+
+    
 
 
 })
 
 
-app.get("/autenticacion",(req,res)=>{
+app.get("/autenticacionCookieControlador",(req,res)=>{
 
 
-    res.json({authorization: permitido});
+  const token = req.cookies.control_token;
+
+
+  try{
+
+    const data = jwt.verify(token, SECRET_JWT_KEY);
+
+
+
+    res.status(200).send({username:data.username});
+
+
+
+  }catch(error){
+
+
+
+    res.status(401).send("No autorizado");
+
+  }
+
 
 
 

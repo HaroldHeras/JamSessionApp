@@ -70,6 +70,7 @@ export class UserRepository{
         if(!usuarioValido) throw new Error("La contraseña no es válida")
 
         const usuarioValidado = {
+            _id: user._id,
             username: user.username
         }
 

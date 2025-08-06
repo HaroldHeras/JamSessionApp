@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +13,24 @@ export class Auth {
     constructor(private http: HttpClient){}
 
 
-    async autenticacion():Promise<boolean>{
+    async autenticacion():Promise<any>{
+
+
+      try{
+
+        const permitido = await firstValueFrom(this.http.get<{username:string}>("/autenticacionCookieControlador", {withCredentials: true}));
+
+
+        return permitido;
+
+
+      }catch(error){
 
 
 
-      const permitido = await firstValueFrom(this.http.get<{authorization:boolean}>("/autenticacion"))
+        return error;
 
-        
-      return permitido.authorization;
-       
+      }       
         
          
 
@@ -37,21 +46,18 @@ export class Auth {
 
 
 
-    async logIn(clave:string): Promise<any> {
+    async logIn(usuario: string, clave:string): Promise<any> {
 
-        let respuesta: any;
 
         try{
 
-          respuesta = await firstValueFrom(this.http.post("/autenticacion", {password:clave}));
-
-         
-
-          return respuesta;
+          const respuesta = await firstValueFrom(this.http.post("/login", {username: usuario, password:clave}));   
+          
+          return respuesta;  
 
 
+        }catch(error:any){
 
-        }catch(error){
 
           return error;        
         
