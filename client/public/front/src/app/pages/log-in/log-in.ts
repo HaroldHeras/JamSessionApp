@@ -21,11 +21,7 @@ export class LogIn {
   async logIn(nombreUsuario:string, password:string){
 
 
-
-
     const autorizado = await this.authService.logIn(nombreUsuario, password);
-
-
 
 
     if(autorizado.ok){
@@ -36,7 +32,6 @@ export class LogIn {
 
       setTimeout(()=>{
         this.router.navigate(["/jamController"]);
-
 
       },3000);        
 

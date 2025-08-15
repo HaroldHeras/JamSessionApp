@@ -1,12 +1,13 @@
 import DBLocal from "db-local";
 import bcrypt from "bcrypt";
-import { Validaciones } from "./validaciones.js";
 import crypto from "crypto";
+import { Validaciones } from "../../validaciones.js";
 
 
 
 
-const {Schema} = new DBLocal({path: "./ddbb"});
+
+const {Schema} = new DBLocal({path: "./ddbb/models/db-local"});
 
 
 const User = Schema("User", {
@@ -21,14 +22,26 @@ const User = Schema("User", {
 
 
 
-export class UserRepository{
+const Canciones = Schema("Canciones", {
+    _id:{type: String, required: true},
+    nombre:{type:String, required:true},
+    genero: {type: String, required: true}
 
-    static async creaUsuario({username, password, superUsuario=false}){
+
+})
+
+
+
+export class LocalRepository{
+
+
+    
+
+    async creaUsuario({username, password, superUsuario=false}){
 
         try{
 
-            Validaciones.validaUsuario(username, password);
-
+            Validaciones.validaUsuario(username, password);            
 
             const user = User.findOne({username});
 
@@ -58,10 +71,9 @@ export class UserRepository{
 
 
 
-    static async logIn({username, password}){
+    async logIn({username, password}){
 
-
-        Validaciones.validaUsuario(username,password);
+        Validaciones.validaUsuario(username, password);
 
         const user = User.findOne({username});
         if(!user) throw new Error("No existe ningun usuario con ese nombre");
@@ -71,7 +83,8 @@ export class UserRepository{
 
         const usuarioValidado = {
             _id: user._id,
-            username: user.username
+            username: user.username,
+            superUsuario: user.superUsuario
         }
 
 
@@ -81,25 +94,7 @@ export class UserRepository{
 
     }
 
-
-
-    static getSuperUsuario(){
-
-
-        const user = User.findOne({superUsuario: true});        
-        
-
-        return user;
-
-
-
-    }
-
-
-
-
-
-
+    
 
 
 }

@@ -13,7 +13,7 @@ import { jamControllerGuard } from './guards/jam-controller-guard';
 
 
 export const routes: Routes = [
-    {path:"register", canActivate:[registerGuard], component: Register},
+    {path:"register",  component: Register},
     {path: "login", canActivate:[loginGuard], component: LogIn},
     {path: "",  component: Home},
     {path: "jamController", canActivate:[jamControllerGuard], component: JamController},

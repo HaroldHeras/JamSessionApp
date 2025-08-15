@@ -35,7 +35,7 @@ export class Register {
       
       const usuario = {username, password, superUsuario:true};
 
-      const respuesta = await fetch("/user-repository", {
+      const respuesta = await fetch("/singin", {
         method: "POST",
         headers:{
           "content-type" : "application/json"
@@ -67,33 +67,12 @@ export class Register {
 
         return;
 
-      } 
-
-      
+      }       
 
     }catch(error){
       throw error;       
     }
       
-
-
-
-  }
-
-
-  async login(){
-
-    await fetch("/register", {
-      method: "POST",
-      headers:{
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        message: "Hola"
-      })
-    });
-    
-
   }
 
 

@@ -21,8 +21,4 @@ export const jamControllerGuard: CanActivateFn = async (route, state) => {
     return false;
   }
 
-
-
-
-  return true;
 };

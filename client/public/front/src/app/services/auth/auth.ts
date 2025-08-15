@@ -30,20 +30,9 @@ export class Auth {
 
         return error;
 
-      }       
-        
-         
-
-        
-       
+      }              
 
     }
-
-
-
-
-     
-
 
 
     async logIn(usuario: string, clave:string): Promise<any> {
