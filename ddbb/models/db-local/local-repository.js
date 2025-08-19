@@ -1,7 +1,7 @@
 import DBLocal from "db-local";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
-import { Validaciones } from "../../validaciones.js";
+import { Validaciones } from "../../services/validaciones.js";
 
 
 

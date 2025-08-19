@@ -35,7 +35,7 @@ export class Register {
       
       const usuario = {username, password, superUsuario:true};
 
-      const respuesta = await fetch("/singin", {
+      const respuesta = await fetch("/signin", {
         method: "POST",
         headers:{
           "content-type" : "application/json"
@@ -44,8 +44,7 @@ export class Register {
       })
 
       
-
-      if(!respuesta.ok){
+      if(respuesta.status === 401){
         const resultado = await respuesta.text();  
         this.resultadoRegistroMensaje = resultado;
         this.resultadoRegistroBoolean = false;

@@ -1,1 +1,8 @@
-[{"superUsuario":true,"_id":"ca9ef40a-7a43-46ed-bde7-936c5d927d49","username":"HaroldRoot","password":"$2b$10$ORDGVv7y/AiGDo1P61WAK.XRikUefx3FaxFPDkNr7OCKQt/dgcHoC"}]
+[
+    {
+        "superUsuario": true,
+        "_id": "a5914fd4-5d87-411c-b336-3d4c39efa7f4",
+        "username": "HaroldRoot",
+        "password": "$2b$10$85NtkPu7bM42YAkpOyfrm.qyOpCfEbsjZdnOWRXcOcqhZmMD9pYPe"
+    }
+]

@@ -1,6 +1,6 @@
 
 
-import { initServidor } from "./server/servidor.js";
+import { Servidor } from "./server/servidor.js";
 import { LocalRepository } from "./ddbb/models/db-local/local-repository.js";
 
 
@@ -9,7 +9,9 @@ import { LocalRepository } from "./ddbb/models/db-local/local-repository.js";
 
 const DBModel = new LocalRepository();
 
-initServidor(DBModel);
+const servidor = new Servidor(DBModel);
+servidor.listen();
+
 
 
 
