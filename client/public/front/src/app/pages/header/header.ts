@@ -16,9 +16,9 @@ export class Header {
     const elemento = evento.target as HTMLElement;
 
       
-    if(elemento.classList.contains("boton-inicio"))  this.router.navigate(["/"]);
+    if(elemento.id==="boton-inicio")  this.router.navigate(["/"]);
 
-    if(elemento.classList.contains("boton-login"))  this.router.navigate(["/login"]);    
+    if(elemento.id==="boton-login")  this.router.navigate(["/login"]);    
 
   }
 

@@ -7,7 +7,7 @@ import { Validaciones } from "../../services/validaciones.js";
 
 
 
-const {Schema} = new DBLocal({path: "./ddbb/models/db-local"});
+const {Schema} = new DBLocal({path: "./ddbb/models/db-local/repositorios"});
 
 
 const User = Schema("User", {
@@ -22,20 +22,24 @@ const User = Schema("User", {
 
 
 
+const Jams = Schema("Jams", {
+    _id:{type: String, required: true},
+    nombre:{type:String, required:true},
+    canciones: {type: Array, required: false}
+
+})
+
+
 const Canciones = Schema("Canciones", {
     _id:{type: String, required: true},
     nombre:{type:String, required:true},
-    genero: {type: String, required: true}
-
-
+    artista:{type:String, required: true}
 })
 
 
 
 export class LocalRepository{
 
-
-    
 
     async creaUsuario({username, password, superUsuario=false}){
 
@@ -63,12 +67,8 @@ export class LocalRepository{
         }catch(error){
             throw error
         }
-        
-
 
     }
-
-
 
 
     async logIn({username, password}){
@@ -87,10 +87,45 @@ export class LocalRepository{
             superUsuario: user.superUsuario
         }
 
-
         return usuarioValidado;
 
+    }
 
+
+    async creaJam(nombreJam){
+
+        try{
+
+            Validaciones.validaJam(nombreJam);
+            const jam = Jams.findOne({nombre: nombreJam})
+            if(jam) throw new Error("Ya existe una Jam con ese nombre");
+
+            const id = crypto.randomUUID();
+
+            Jams.create({
+                _id:id,
+                nombre:nombreJam
+            }).save();
+
+            return id;
+
+        }catch(error){
+            throw error;
+        }
+
+    }
+
+
+    async getJamsAll(){
+
+        try{
+
+            const jams = Jams.find();
+            return jams;
+
+        }catch(error){
+            throw error;
+        }
 
     }
 

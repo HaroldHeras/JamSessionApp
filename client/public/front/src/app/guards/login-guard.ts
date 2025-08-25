@@ -10,24 +10,16 @@ export const loginGuard: CanActivateFn = async (route, state) => {
       const autService = inject(Auth);
 
 
-      const respuestaSuperUsuario = await fetch("/superUsuario");
 
-      const respuestaAuthService = await autService.autenticacion();
+      const respuesta = await autService.autenticacion();
 
-      if(respuestaSuperUsuario.status===204){
-
-        router.navigate(["/register"]);
-
-        return false;
-
-      }else if(respuestaAuthService.username){
+      if(!!respuesta.username){
 
          router.navigate(["/"]);
 
         return false;
 
-      }
-        
+      }        
         
       return true;
 

@@ -8,15 +8,20 @@ import { NotFound } from './pages/not-found/not-found';
 import { authGuard } from './guards/auth-guard';
 import { Register } from './pages/register/register';
 import { loginGuard } from './guards/login-guard';
-import { registerGuard } from './guards/register-guard';
-import { jamControllerGuard } from './guards/jam-controller-guard';
+import { NuevaJam } from './pages/nueva-jam/nueva-jam';
+import { ListaJams } from './pages/lista-jams/lista-jams';
+
 
 
 export const routes: Routes = [
     {path:"register",  component: Register},
     {path: "login", canActivate:[loginGuard], component: LogIn},
     {path: "",  component: Home},
-    {path: "jamController", canActivate:[jamControllerGuard], component: JamController},
+    {path: "jamController", canActivate:[authGuard], component: JamController, children:[
+        {path:"nuevaJam", component: NuevaJam},
+        {path: "listaJams", component: ListaJams},
+        {path:"", redirectTo: "listaJams", pathMatch: "full"}
+    ]},
     {path: "musico", component: Musico},
     {path: "espectador",  component: Espectador},
     {path: "**",  component: NotFound},

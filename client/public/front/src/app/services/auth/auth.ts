@@ -18,15 +18,13 @@ export class Auth {
 
       try{
 
-        const permitido = await firstValueFrom(this.http.get<{username:string}>("/autenticacionCookieControlador", {withCredentials: true}));
+        const permitido = await firstValueFrom(this.http.get<{id: String, username:string, superUsuario: boolean}>("/session", {withCredentials: true}));
 
 
         return permitido;
 
 
       }catch(error){
-
-
 
         return error;
 

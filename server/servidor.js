@@ -31,6 +31,7 @@ export class Servidor{
     this.#angularPath = path.join(__dirname, "../client/public/front/dist/front/browser");
     this.#DBModel = DBModel;
     this.middlewares();
+    this.jamRoutes();
     this.routes();
     RootService.creaRootUser(Configuration.getRootCredentials(), this.#DBModel);
 
@@ -49,12 +50,11 @@ export class Servidor{
 
       const token = req.cookies.control_token;
 
-      req.session = {username: null, superUsuario:false};
+      req.session = {id: null, username: null, superUsuario:false};
       try{
 
         const data = jwt.verify(token, this.#SECRET_JWT_KEY);
-        req.session.username = data.username;
-        req.session.superUsuario = data.superUsuario;
+        req.session = {id: data.id, username: data.username, superUsuario: data.superUsuario};
 
       }catch{}
 
@@ -122,26 +122,15 @@ export class Servidor{
     })
   
   
-    this.#app.get("/autenticacionCookieControlador",(req,res)=>{
-  
-  
-      const token = req.cookies.control_token;
+    this.#app.get("/session",(req,res)=>{
+
     
-    
-      try{
-    
-        const data = jwt.verify(token, this.#SECRET_JWT_KEY);    
-    
-        res.status(200).send({username:data.username});
-    
-    
-    
-      }catch(error){    
-    
-        res.status(401).send("No autorizado");
-    
-      }  
-  
+      const session = {...req.session};       
+        
+      if(!session.id) return res.status(401).send("No autorizado");
+      
+      return res.status(200).send(session);
+        
     })
   
   
@@ -149,6 +138,40 @@ export class Servidor{
     
       res.sendFile(path.join(this.#angularPath, "index.html"));
     });
+
+
+  }
+
+
+
+  jamRoutes(){
+
+
+    this.#app.post("/jams", async (req,res)=>{
+
+      if(!req.session.superUsuario) return res.status(401).send("No autorizado para esta accion");
+
+      try{
+        const {nombre} = req.body;
+        const idJam = await this.#DBModel.creaJam(nombre);
+        return res.status(201).json({ok: true, id: idJam});
+      }catch(error){
+        return res.status(400).send({ok: false, message:error.message})
+      }
+
+
+    })
+
+    this.#app.get("/jams", async (req,res)=>{
+
+      const jams = await this.#DBModel.getJamsAll();
+
+      if(!jams) return res.status(204)
+      
+      return jams;
+
+
+    })
 
 
   }

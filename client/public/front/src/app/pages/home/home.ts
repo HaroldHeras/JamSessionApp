@@ -21,7 +21,7 @@ export class Home {
     console.log("Este es el elemento: ", elemento)
     console.log("Este es su texto: ", elemento.innerText)
 
-    if(elemento.innerText==="Espectador"){
+    if(elemento.id==="espectador"){
 
         this.router.navigate(["/espectador"])
 

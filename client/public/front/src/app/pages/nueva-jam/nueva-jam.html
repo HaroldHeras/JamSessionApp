@@ -1,0 +1,12 @@
+<p>NUEVA JAM</p>
+
+<p>Introduzca el nombre de la Jam</p>
+<input #nombreJam id="input-nombre" type="text" placeholder="Nombre de la jam"><br>
+
+<button id="boton-creaJam" (click)="creaJam(nombreJam.value)">Crear Jam</button>
+
+@if (ok){
+    <p  style="color:green">{{mensaje}}</p>
+} @else {
+    <p  style="color:red">{{mensaje}}</p>
+}
