@@ -3,6 +3,7 @@ import { Jams } from '../../services/jams/jams';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Cancion } from '../../interfaces/Cancion.interfaz';
 
 @Component({
   selector: 'app-nueva-jam',
@@ -18,25 +19,23 @@ export class NuevaJam {
 
   constructor(private jams:Jams, private router:Router){}
 
-  async creaJam(nombreJam:string){
+  creaJam(nombreJam:string, canciones:Cancion[] = []):void{
 
-    try{
-      const respuesta = await this.jams.crearJam(nombreJam);
+    
+      this.jams.crearJam(nombreJam, canciones).subscribe({
+        next: (data)=>{
+          this.mensaje = "Jam creada correctamente";
+          this.ok = data.ok;
+          setTimeout(()=>{
+            this.router.navigate(["/jamController"]);
+          }, 1500)
+        },
+        error: (err)=>{
+          this.mensaje = err.error.message;
+          this.ok=err.ok;
+        } 
+      });
       
-      this.mensaje = "Jam creada correctamente";
-      this.ok = respuesta.ok;
-      setTimeout(()=>{
-        this.router.navigate(["/jamController"]);
-      }, 1500)
-      return;
-      
-
-    }catch(error:any){
-      this.mensaje = error.error.message;
-      this.ok=error.ok;
-      return
-    }
-
   }
 
 }

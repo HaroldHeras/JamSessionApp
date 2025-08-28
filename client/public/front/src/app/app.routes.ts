@@ -17,7 +17,7 @@ export const routes: Routes = [
     {path:"register",  component: Register},
     {path: "login", canActivate:[loginGuard], component: LogIn},
     {path: "",  component: Home},
-    {path: "jamController", canActivate:[authGuard], component: JamController, children:[
+    {path: "jamController", canActivateChild:[authGuard], component: JamController, children:[
         {path:"nuevaJam", component: NuevaJam},
         {path: "listaJams", component: ListaJams},
         {path:"", redirectTo: "listaJams", pathMatch: "full"}

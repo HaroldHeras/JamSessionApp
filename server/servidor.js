@@ -99,12 +99,10 @@ export class Servidor{
   
       const {username, password} = req.body;
   
-      try{
-  
+      try{  
         const usuarioVerificado = await this.#DBModel.logIn({username, password});
         const token = jwt.sign({id:usuarioVerificado._id, username: usuarioVerificado.username, superUsuario: usuarioVerificado.superUsuario}, this.#SECRET_JWT_KEY, {expiresIn: "1d"});
-  
-  
+   
         res.status(200).cookie("control_token", token,{
           httpOnly: true,
           secure: true,
@@ -113,12 +111,21 @@ export class Servidor{
         })
         .send({ok:true, usuarioVerificado});
   
-      }catch(error){
-  
-        res.status(401).json({ok: false, message: error.message});
-  
+      }catch(error){  
+        res.status(401).json({ok: false, message: error.message});  
       } 
   
+    })
+
+    this.#app.post("/logout",(req,res)=>{
+
+      res.clearCookie("control_token", {
+        httpOnly: true,
+        secure: true,
+        sameSite:"strict",
+      })
+      res.status(200).json({message: "LogOut realizado"})
+
     })
   
   
@@ -152,9 +159,9 @@ export class Servidor{
       if(!req.session.superUsuario) return res.status(401).send("No autorizado para esta accion");
 
       try{
-        const {nombre} = req.body;
-        const idJam = await this.#DBModel.creaJam(nombre);
-        return res.status(201).json({ok: true, id: idJam});
+        const {nombre, canciones} = req.body;
+        const jamNueva = await this.#DBModel.creaJam(nombre, canciones);
+        return res.status(201).json({ok: true, jamNueva});
       }catch(error){
         return res.status(400).send({ok: false, message:error.message})
       }
@@ -162,13 +169,16 @@ export class Servidor{
 
     })
 
-    this.#app.get("/jams", async (req,res)=>{
+    this.#app.get("/jamsAll", async (req,res)=>{
 
-      const jams = await this.#DBModel.getJamsAll();
-
-      if(!jams) return res.status(204)
+      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+      try{
+        const jams = await this.#DBModel.getJamsAll();     
+        return res.status(200).send(jams)
+      }catch(error){
+        throw error;
+      }
       
-      return jams;
 
 
     })

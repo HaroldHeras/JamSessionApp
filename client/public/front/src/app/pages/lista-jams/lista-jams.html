@@ -1,4 +1,16 @@
-<p>lista-jams works!</p>
+<p>JAMS DISPONIBLES</p>
 
 <button (click)="redirige($event)" id="boton-nuevaJam">Nueva Jam</button>
+<ul>
+    @for(jam of jams$ |async; track jam._id){
+        <div >
+            <button id="{{jam._id}}" class="jam-{{jam.nombre}}">
+                {{jam.nombre}}
+            </button>
+            <button>Activar</button>
+            <button>Borrar</button>
+        </div>
+    }
+    
+</ul>
 

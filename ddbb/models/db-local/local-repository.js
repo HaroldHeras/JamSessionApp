@@ -23,6 +23,8 @@ const User = Schema("User", {
 
 
 const Jams = Schema("Jams", {
+    
+    activated:{type:Boolean, required:true, default:false},
     _id:{type: String, required: true},
     nombre:{type:String, required:true},
     canciones: {type: Array, required: false}
@@ -92,7 +94,7 @@ export class LocalRepository{
     }
 
 
-    async creaJam(nombreJam){
+    async creaJam(nombreJam, canciones = []){
 
         try{
 
@@ -102,12 +104,15 @@ export class LocalRepository{
 
             const id = crypto.randomUUID();
 
-            Jams.create({
+            const jamNueva= {
                 _id:id,
-                nombre:nombreJam
-            }).save();
+                nombre:nombreJam,
+                canciones
+            }
 
-            return id;
+            Jams.create(jamNueva).save();
+
+            return jamNueva;
 
         }catch(error){
             throw error;

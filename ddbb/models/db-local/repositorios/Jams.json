@@ -1,18 +1,1 @@
-[
-    {
-        "_id": "4d4cb9af-a156-4162-ab9f-9f975d01e695",
-        "nombre": "Adaya"
-    },
-    {
-        "_id": "c0c3f348-1b0c-4f6c-a344-05d81a9bdfda",
-        "nombre": "fgvddx"
-    },
-    {
-        "_id": "282f5b13-6ba6-4007-9b3f-8c8ef7d24e87",
-        "nombre": "szdczsvcd"
-    },
-    {
-        "_id": "9336c468-bd50-450c-86a3-07cac6e45bb9",
-        "nombre": "Harold"
-    }
-]
+[{"activated":false,"_id":"779008d7-fdb5-43f3-9998-749242b6c521","nombre":"Harold35","canciones":[]},{"activated":false,"_id":"75d19ef2-fe31-41c7-8ecb-dbec1013091b","nombre":"Sara2","canciones":[]},{"activated":false,"_id":"317f593d-4c03-4f85-926f-3d5b489ad3fb","nombre":"Sara","canciones":[]},{"activated":false,"_id":"6c4252b4-1bd3-4c04-9682-0463a4204cb8","nombre":"Harold","canciones":[]}]

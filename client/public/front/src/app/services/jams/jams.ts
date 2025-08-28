@@ -1,24 +1,45 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Jam } from '../../interfaces/Jam.interface';
+import { Cancion } from '../../interfaces/Cancion.interfaz';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class Jams {
+
+   private jamSubject:BehaviorSubject<Jam[]> = new BehaviorSubject<Jam[]>([])
+  jams$ = this.jamSubject.asObservable();
+  
 
   constructor(private http:HttpClient){}
 
-  async crearJam(nombre:string): Promise<any>{
+  cargaJams():void{
 
-    try{
+    this.http.get<Jam[]>("/jamsAll").subscribe({
+      next: (data)=> this.jamSubject.next(data),
+      error: (err)=> console.error(err.error.message)
       
-      const respuesta = await firstValueFrom(this.http.post("/jams", {nombre}));
-      return respuesta;
+    });
 
-    }catch(error:any){
-      throw error;
-    }
   }
+
+  crearJam(nombre:string, canciones:Cancion[]):Observable<{ok:boolean, jamNueva:Jam}>{
+
+    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jams", {nombre, canciones}).pipe(
+      tap(()=> this.cargaJams())
+    );
+
+    
+  }
+
+   
   
 }
+
+

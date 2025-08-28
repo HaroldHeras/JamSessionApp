@@ -8,9 +8,5 @@ import { Router, RouterOutlet } from '@angular/router';
   styleUrl: './jam-controller.css'
 })
 export class JamController {
-
-
   
-
-
 }

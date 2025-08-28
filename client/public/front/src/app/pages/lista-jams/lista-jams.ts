@@ -1,15 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Jams } from '../../services/jams/jams';
+import { Jam } from '../../interfaces/Jam.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lista-jams',
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './lista-jams.html',
   styleUrl: './lista-jams.css'
 })
-export class ListaJams {
+export class ListaJams implements OnInit {
 
-  constructor(private router:Router){}
+  jams$;
+
+  constructor(private router:Router, private jams:Jams){
+    this.jams$ = this.jams.jams$;
+  }
+
+
+  ngOnInit(): void {
+
+    this.jams.cargaJams()
+    
+      
+  }
 
 
   redirige(event:Event){
@@ -22,5 +39,8 @@ export class ListaJams {
     } 
 
   }
+ 
+
+  
 
 }

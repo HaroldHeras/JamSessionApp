@@ -32,7 +32,6 @@ export class LogIn {
 
       setTimeout(()=>{
         this.router.navigate(["/jamController"]);
-
       },3000);        
 
     }else{

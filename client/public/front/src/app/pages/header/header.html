@@ -1,2 +1,8 @@
 <button (click)="redirige($event)" id="boton-inicio">Inicio</button>
-<button (click)="redirige($event)" id="boton-login">LogIn</button>
+@if (auth | async) {
+    <button (click)="redirige($event)" id="boton-control">Panel de Control</button>
+    <button (click)="redirige($event)" id="boton-logout">LogOut</button>
+
+}@else {
+    <button (click)="redirige($event)" id="boton-login">LogIn</button>
+}
