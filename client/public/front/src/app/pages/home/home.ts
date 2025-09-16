@@ -1,16 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Jams } from '../../services/jams/jams';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Jam } from '../../interfaces/Jam.interface';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home {
+export class Home implements OnInit{
+
+  jams$;
+
+  constructor(private router:Router, private jams:Jams){
+    this.jams.cargaPublicJams();
+
+    this.jams$ = this.jams.publicJams$;
+  }
+
+  ngOnInit(): void {
+    
+
+  }
 
 
-  constructor(private router:Router){}
 
   redirige(event: Event){
 

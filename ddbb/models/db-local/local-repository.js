@@ -134,6 +134,20 @@ export class LocalRepository{
 
     }
 
+
+    async updateJam(id, activated){
+
+        try{
+
+            Jams.update({_id:id}, {activated}).save();
+            return Jams.find({_id:id})
+
+        }catch(error){
+            throw error;
+        }
+
+    }
+
     
 
 

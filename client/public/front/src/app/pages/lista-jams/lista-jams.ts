@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Jams } from '../../services/jams/jams';
-import { Jam } from '../../interfaces/Jam.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
 
@@ -15,15 +13,16 @@ import { CommonModule } from '@angular/common';
 export class ListaJams implements OnInit {
 
   jams$;
+  
 
   constructor(private router:Router, private jams:Jams){
-    this.jams$ = this.jams.jams$;
+    this.jams$ = this.jams.privateJams$;
   }
 
 
   ngOnInit(): void {
 
-    this.jams.cargaJams()
+    this.jams.cargaPrivateJams()
     
       
   }
@@ -37,6 +36,17 @@ export class ListaJams implements OnInit {
       this.router.navigate(["jamController/nuevaJam"])
       return;
     } 
+
+  }
+
+  switchJam(event:Event){
+
+    const elemento = event.target as HTMLElement;
+
+    const activo = elemento.parentElement?.getAttribute("data-activated")==="true" ? true : false;
+    const id = elemento.parentElement?.id;
+
+    this.jams.updateJam(id, !activo).subscribe();
 
   }
  

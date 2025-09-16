@@ -12,10 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class Header {
 
-  auth:Observable<boolean>
+  auth$;
 
   constructor(private router:Router, private authService:Auth){
-    this.auth = this.authService.auth$;         
+    this.authService.autenticacion()
+    this.auth$ = this.authService.auth$;         
 
   }
 

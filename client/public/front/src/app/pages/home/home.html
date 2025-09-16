@@ -1,6 +1,19 @@
 
-<p>BIENVENIDO A TU JAM SESSIONS</p>
+<p>BIENVENIDO A LA PÁGINA DE JAM SESSIONS</p>
 
+<P>JAM SESSIONS ACTIVAS:</P>
+
+
+<ul>
+    @for(jam of jams$ |async; track jam._id){
+        <div >
+            <button id="{{jam._id}}" class="jam-{{jam.nombre}}">
+                {{jam.nombre}}
+            </button> 
+        </div>
+    }
+    
+</ul>
 
 <p>Elija una opcion</p>
 <button (click)="redirige($event)"  id="boton-espectador" >Espectador</button>

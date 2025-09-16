@@ -3,11 +3,16 @@
 <button (click)="redirige($event)" id="boton-nuevaJam">Nueva Jam</button>
 <ul>
     @for(jam of jams$ |async; track jam._id){
-        <div >
-            <button id="{{jam._id}}" class="jam-{{jam.nombre}}">
+        
+        <div id="{{jam._id}}" [attr.data-activated]="jam.activated">
+            <button>
                 {{jam.nombre}}
             </button>
-            <button>Activar</button>
+            @if (jam.activated) {
+                <button (click)="switchJam($event)">Desactivar</button>
+            }@else {
+                <button (click)="switchJam($event)">Activar</button>
+            }
             <button>Borrar</button>
         </div>
     }

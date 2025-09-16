@@ -171,15 +171,39 @@ export class Servidor{
 
     this.#app.get("/jamsAll", async (req,res)=>{
 
-      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+      const {activated}=req.query;
       try{
-        const jams = await this.#DBModel.getJamsAll();     
+        const jams = await this.#DBModel.getJamsAll();
+        if(activated){
+            const jamsActivated = jams.filter(jam=> jam.activated);
+            console.log(jamsActivated)
+
+            return res.status(200).send(jamsActivated); 
+        }     
+        if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
         return res.status(200).send(jams)
       }catch(error){
         throw error;
       }
-      
 
+    })
+
+
+    this.#app.post("/jamUpdate", async (req,res)=>{
+
+      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+
+      try{
+
+        const {id, activated} = req.body;
+
+        const jamActualizada = await this.#DBModel.updateJam(id, activated);
+
+        res.status(214).send(jamActualizada);
+
+      }catch(error){
+        throw error;
+      }
 
     })
 

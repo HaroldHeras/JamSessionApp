@@ -1,10 +1,13 @@
 <p> Acceso Jam</p>
 
-<input #nombreUsuario id="input-username"  placeholder="Nombre Usuario"><br>
+<form action="">
+    <input #nombreUsuario id="input-username"  placeholder="Nombre Usuario"><br>
 
-<input #password id="input-password" type="password"  placeholder="Escriba aqui la contraseña de acceso">
+    <input #password id="input-password" type="password"  placeholder="Escriba aqui la contraseña de acceso">
 
-<button (click)="logIn(nombreUsuario.value, password.value)" class="boton-login">LogIn</button>
+    <button (click)="logIn(nombreUsuario.value, password.value)" class="boton-login">LogIn</button>
+</form>
+
 
 @if (acceso){
     <p  style="color:green">{{mensaje}}</p>
