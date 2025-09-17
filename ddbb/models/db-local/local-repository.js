@@ -42,14 +42,12 @@ const Canciones = Schema("Canciones", {
 
 export class LocalRepository{
 
-
     async creaUsuario({username, password, superUsuario=false}){
 
         try{
-
             Validaciones.validaUsuario(username, password);            
 
-            const user = User.findOne({username});
+            const user = await User.findOne({username});
 
             if(user) throw new Error("El usuario con ese nombre ya existe")
             
@@ -57,7 +55,7 @@ export class LocalRepository{
 
             const id = crypto.randomUUID();
 
-            User.create({
+            await User.create({
                 superUsuario,
                 _id: id,
                 username,
@@ -77,7 +75,7 @@ export class LocalRepository{
 
         Validaciones.validaUsuario(username, password);
 
-        const user = User.findOne({username});
+        const user = await User.findOne({username});
         if(!user) throw new Error("No existe ningun usuario con ese nombre");
 
         const usuarioValido = await bcrypt.compare(password, user.password);
@@ -97,9 +95,8 @@ export class LocalRepository{
     async creaJam(nombreJam, canciones = []){
 
         try{
-
             Validaciones.validaJam(nombreJam);
-            const jam = Jams.findOne({nombre: nombreJam})
+            const jam = await Jams.findOne({nombre: nombreJam})
             if(jam) throw new Error("Ya existe una Jam con ese nombre");
 
             const id = crypto.randomUUID();
@@ -110,7 +107,7 @@ export class LocalRepository{
                 canciones
             }
 
-            Jams.create(jamNueva).save();
+            await Jams.create(jamNueva).save();
 
             return jamNueva;
 
@@ -124,8 +121,7 @@ export class LocalRepository{
     async getJamsAll(){
 
         try{
-
-            const jams = Jams.find();
+            const jams = await Jams.find();
             return jams;
 
         }catch(error){
@@ -134,14 +130,29 @@ export class LocalRepository{
 
     }
 
-
-    async updateJam(id, activated){
+    async getJam(id){
 
         try{
+            return await Jams.findOne({_id:id})
+        }catch(error){
+            throw error;
+        }
 
-            Jams.update({_id:id}, {activated}).save();
-            return Jams.find({_id:id})
+    }
 
+    async updateJam(id, jamBody){
+        try{
+            await Jams.update({_id:id}, jamBody).save();
+            return await Jams.find({_id:id})
+        }catch(error){
+            throw error;
+        }
+    }
+
+    async borraJam(id){
+
+        try{
+            await Jams.remove({_id: id});
         }catch(error){
             throw error;
         }

@@ -47,19 +47,29 @@ export class Jams {
 
   crearJam(nombre:string, canciones:Cancion[]):Observable<{ok:boolean, jamNueva:Jam}>{
 
-    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jams", {nombre, canciones}).pipe(
+    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jam", {nombre, canciones}).pipe(
       tap(()=> this.cargaPrivateJams())
-    );
-
-    
+    );    
   }
 
-  updateJam(id:string | any, activated:boolean):Observable<Object>{
+  getJam(id:string):Observable<Jam>{
 
-    return this.http.post<Object>("/jamUpdate", {id, activated}).pipe(
+    return this.http.get<Jam>("/jam/"+id);
+
+  }
+
+  updateJam(id: string, jamBody: Object):Observable<any>{
+
+    return this.http.put<Object>("/jam", {id, jamBody}).pipe(
       tap(()=> this.cargaPrivateJams() )
     );
 
+  }
+
+  borraJam(id:string):Observable<any>{
+    return this.http.delete<string>("/jam/"+id).pipe(
+      tap(()=> this.cargaPrivateJams() )
+    );
   }
 
    

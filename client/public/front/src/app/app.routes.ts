@@ -10,6 +10,7 @@ import { Register } from './pages/register/register';
 import { loginGuard } from './guards/login-guard';
 import { NuevaJam } from './pages/nueva-jam/nueva-jam';
 import { ListaJams } from './pages/lista-jams/lista-jams';
+import { JamDetailPrivate } from './pages/jam-detail-private/jam-detail-private';
 
 
 
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {path: "jamController", canActivateChild:[authGuard], component: JamController, children:[
         {path:"nuevaJam", component: NuevaJam},
         {path: "listaJams", component: ListaJams},
+        {path: "jam/:id", component: JamDetailPrivate},
         {path:"", redirectTo: "listaJams", pathMatch: "full"}
     ]},
     {path: "musico", component: Musico},

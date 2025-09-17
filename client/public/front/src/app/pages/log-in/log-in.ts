@@ -18,28 +18,21 @@ export class LogIn {
 
   constructor(private authService:Auth, private router:Router){}
 
-  async logIn(nombreUsuario:string, password:string){
+  logIn(nombreUsuario:string, password:string){
 
-
-    const autorizado = await this.authService.logIn(nombreUsuario, password);
-
-
-    if(autorizado.ok){
-
-      this.acceso = autorizado.ok;
-      this.mensaje = "Contraseña correcta. Redirigiendo al controlador...";
-
-
-      setTimeout(()=>{
-        this.router.navigate(["/jamController"]); 
-      },3000);        
-
-    }else{
-      this.acceso = autorizado.ok;
-      this.mensaje = autorizado.error.message;
-    }
-
-
+    this.authService.logIn(nombreUsuario,password).subscribe({
+      next: (data)=> {
+        this.acceso = data.ok
+        this.mensaje = "Contraseña correcta. Redirigiendo al controlador..."
+        setTimeout(()=>{
+          this.router.navigate(["/jamController"]); 
+        },1500);   
+      },
+      error: (err)=>{
+        this.acceso = err.ok
+        this.mensaje = err.error.message
+      }
+    })
   }
 
 

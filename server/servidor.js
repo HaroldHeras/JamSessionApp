@@ -70,29 +70,18 @@ export class Servidor{
   routes(){
 
     this.#app.post("/signin", async (req,res)=>{
-
         
-      if(!req.session.superUsuario)  return res.status(401).send("No autorizado para esta accion");
-      
-      const usuarioNuevo = req.body;
-    
-    
-      try{
-    
-        const idUsuarioNuevo = await this.#DBModel.creaUsuario(usuarioNuevo)  
-    
-        res.status(201).json({idUsuarioNuevo});
-    
+      if(!req.session.superUsuario)  return res.status(401).send("No autorizado para esta accion");      
+      const usuarioNuevo = req.body;    
+      try{    
+        const idUsuarioNuevo = await this.#DBModel.creaUsuario(usuarioNuevo)     
+        res.status(201).json({idUsuarioNuevo});    
       }catch(error){
         res.status(400).send(error.message);
       } 
   
   
-    })  
-  
-  
-  
-   
+    })     
   
   
     this.#app.post("/login", async (req,res)=>{
@@ -153,22 +142,6 @@ export class Servidor{
 
   jamRoutes(){
 
-
-    this.#app.post("/jams", async (req,res)=>{
-
-      if(!req.session.superUsuario) return res.status(401).send("No autorizado para esta accion");
-
-      try{
-        const {nombre, canciones} = req.body;
-        const jamNueva = await this.#DBModel.creaJam(nombre, canciones);
-        return res.status(201).json({ok: true, jamNueva});
-      }catch(error){
-        return res.status(400).send({ok: false, message:error.message})
-      }
-
-
-    })
-
     this.#app.get("/jamsAll", async (req,res)=>{
 
       const {activated}=req.query;
@@ -189,18 +162,62 @@ export class Servidor{
     })
 
 
-    this.#app.post("/jamUpdate", async (req,res)=>{
+    this.#app.get("/jam/:id", async (req,res)=>{
+
+      const id = req.params.id;
+      try{
+        const jam = await this.#DBModel.getJam(id);
+        if(!req.session.username && !jam.activated) return res.status(401).send("No autorizado para esta accion");
+        res.status(200).json(jam);
+      }catch(error){
+        throw error;
+      }
+
+
+    })
+
+
+    this.#app.post("/jam", async (req,res)=>{
+
+      if(!req.session.superUsuario) return res.status(401).send("No autorizado para esta accion");
+
+      try{
+        const {nombre, canciones} = req.body;
+        const jamNueva = await this.#DBModel.creaJam(nombre, canciones);
+        return res.status(201).json({ok: true, jamNueva});
+      }catch(error){
+        return res.status(400).send({ok: false, message:error.message})
+      }
+
+
+    })    
+
+
+    this.#app.put("/jam", async (req,res)=>{
 
       if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
 
       try{
 
-        const {id, activated} = req.body;
+        const {id, jamBody} = req.body;
 
-        const jamActualizada = await this.#DBModel.updateJam(id, activated);
+        const jamActualizada = await this.#DBModel.updateJam(id, jamBody);
 
-        res.status(214).send(jamActualizada);
+        res.status(214).json(jamActualizada);
 
+      }catch(error){
+        throw error;
+      }
+
+    })
+
+    this.#app.delete("/jam/:id", async (req,res)=>{
+
+      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+      try{
+        const id= req.params.id;
+        await this.#DBModel.borraJam(id);
+        res.status(200).json({message: "Jam borrada correctamente"});
       }catch(error){
         throw error;
       }

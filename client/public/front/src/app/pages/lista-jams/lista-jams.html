@@ -1,21 +1,35 @@
 <p>JAMS DISPONIBLES</p>
 
-<button (click)="redirige($event)" id="boton-nuevaJam">Nueva Jam</button>
+<button [routerLink]="['/jamController/nuevaJam']" id="boton-nuevaJam">Nueva Jam</button>
 <ul>
     @for(jam of jams$ |async; track jam._id){
         
-        <div id="{{jam._id}}" [attr.data-activated]="jam.activated">
-            <button>
+        <div >
+            <button [routerLink]="['/jamController/jam', jam._id]">
                 {{jam.nombre}}
             </button>
+            <button>
+                Añadir canciones
+            </button>
             @if (jam.activated) {
-                <button (click)="switchJam($event)">Desactivar</button>
+                <button (click)="switchJam(jam._id, jam.activated)">Desactivar</button>
             }@else {
-                <button (click)="switchJam($event)">Activar</button>
+                <button (click)="switchJam(jam._id, jam.activated)">Activar</button>
             }
-            <button>Borrar</button>
+            <button (click)="abrirModal(jam.nombre, jam._id)">Borrar</button>
         </div>
     }
     
 </ul>
 
+@if (ventanaModal) {
+  <div class="overlay">
+    <div class="modal">
+      <p>¿Seguro que quieres borrar la Jam {{nombreBorrar}}?<br> (Si pulsa en "Confirmar", perderá todos los datos relacionados con esta Jam)</p>
+      <div >
+        <button (click)="borrarJam()">Confirmar</button>
+        <button (click)="cerrarModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+}

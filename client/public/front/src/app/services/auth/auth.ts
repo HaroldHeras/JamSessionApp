@@ -16,7 +16,7 @@ export class Auth {
 
     async autenticacion():Promise<any>{
       try{
-        const permitido = await firstValueFrom(this.http.get<{id: String, username:string, superUsuario: boolean}>("/session", {withCredentials: true}));
+        const permitido = await firstValueFrom(this.http.get<{id: string, username:string, superUsuario: boolean}>("/session", {withCredentials: true}));
         this.authSubject.next(true);
         return permitido;
       }catch(error){
@@ -26,13 +26,10 @@ export class Auth {
     }
 
 
-    async logIn(usuario: string, clave:string): Promise<any> {
-        try{
-          const respuesta = await firstValueFrom(this.http.post("/login", {username: usuario, password:clave}));             
-          return respuesta;  
-        }catch(error:any){
-          return error;                
-        } 
+    logIn(usuario: string, clave:string): Observable<any> {
+
+      return this.http.post<Object>("/login", {username: usuario, password:clave});
+
     }
 
 

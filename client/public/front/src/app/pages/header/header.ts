@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { Auth } from '../../services/auth/auth';
 import { Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -20,22 +21,12 @@ export class Header {
 
   }
 
-  redirige(evento:Event){
-
-    const elemento = evento.target as HTMLElement;
-
-      
-    if(elemento.id==="boton-inicio")  this.router.navigate(["/"]);
-    if(elemento.id==="boton-login")  this.router.navigate(["/login"]);
-    if(elemento.id==="boton-control")  this.router.navigate(["/jamController"]);
-    if(elemento.id==="boton-logout"){
-      this.authService.logOut().pipe(            
+  logOut():void{
+    this.authService.logOut().pipe(            
         tap(()=> this.router.navigate(["/login"]))
       ).subscribe()
-    } 
-     
-
-
   }
+
+  
 
 }

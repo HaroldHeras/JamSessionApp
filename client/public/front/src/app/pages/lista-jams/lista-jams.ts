@@ -1,30 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Jams } from '../../services/jams/jams';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
+import { Observable, tap } from 'rxjs';
+import { RouterModule, Router } from "@angular/router";
+import { Jam } from '../../interfaces/Jam.interface';
 
 @Component({
   selector: 'app-lista-jams',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './lista-jams.html',
   styleUrl: './lista-jams.css'
 })
 export class ListaJams implements OnInit {
 
-  jams$;
+  jams$:Observable<Jam[]> | undefined;
+
+  ventanaModal:boolean = false;
+
+  idBorrar: string = "";
+  nombreBorrar: string = "";
   
 
   constructor(private router:Router, private jams:Jams){
-    this.jams$ = this.jams.privateJams$;
   }
 
 
   ngOnInit(): void {
-
-    this.jams.cargaPrivateJams()
-    
-      
+    this.jams.cargaPrivateJams()   
+    this.jams$ = this.jams.privateJams$;
   }
 
 
@@ -39,15 +43,31 @@ export class ListaJams implements OnInit {
 
   }
 
-  switchJam(event:Event){
+  switchJam(id:string, activated:boolean):void{
 
-    const elemento = event.target as HTMLElement;
+    this.jams.updateJam(id, {activated: !activated}).subscribe();
 
-    const activo = elemento.parentElement?.getAttribute("data-activated")==="true" ? true : false;
-    const id = elemento.parentElement?.id;
+  }
 
-    this.jams.updateJam(id, !activo).subscribe();
+  borrarJam():void{
 
+    this.jams.borraJam(this.idBorrar).pipe(
+      tap(()=> this.cerrarModal() )
+    ).subscribe()
+
+  }
+
+  abrirModal(nombre:string, id:string):void{
+
+    this.nombreBorrar = nombre;
+    this.idBorrar = id;
+    this.ventanaModal = true;
+  }
+
+  cerrarModal():void{
+    this.nombreBorrar = "";
+    this.idBorrar = "";
+    this.ventanaModal = false;
   }
  
 
