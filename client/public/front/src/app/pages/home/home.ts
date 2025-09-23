@@ -1,28 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterModule,Router } from '@angular/router';
 import { Jams } from '../../services/jams/jams';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Jam } from '../../interfaces/Jam.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit{
 
-  jams$;
+  jams$!: Observable<Jam[]>;
 
-  constructor(private router:Router, private jams:Jams){
-    this.jams.cargaPublicJams();
-
-    this.jams$ = this.jams.publicJams$;
-  }
+  constructor(private router:Router, private jams:Jams){}
 
   ngOnInit(): void {
-    
+    this.jams.cargaPublicJams();
+    this.jams$ = this.jams.publicJams$;
 
   }
 

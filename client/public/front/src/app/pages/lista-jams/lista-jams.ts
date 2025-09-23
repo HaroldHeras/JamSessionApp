@@ -32,17 +32,6 @@ export class ListaJams implements OnInit {
   }
 
 
-  redirige(event:Event){
-
-    const elemento = event.target as HTMLElement;
-
-    if(elemento.id==="boton-nuevaJam"){
-      this.router.navigate(["jamController/nuevaJam"])
-      return;
-    } 
-
-  }
-
   switchJam(id:string, activated:boolean):void{
 
     this.jams.updateJam(id, {activated: !activated}).subscribe();

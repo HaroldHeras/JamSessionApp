@@ -149,8 +149,6 @@ export class Servidor{
         const jams = await this.#DBModel.getJamsAll();
         if(activated){
             const jamsActivated = jams.filter(jam=> jam.activated);
-            console.log(jamsActivated)
-
             return res.status(200).send(jamsActivated); 
         }     
         if(!req.session.username) return res.status(401).send("No autorizado para esta accion");

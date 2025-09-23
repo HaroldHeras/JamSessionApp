@@ -143,7 +143,7 @@ export class LocalRepository{
     async updateJam(id, jamBody){
         try{
             await Jams.update({_id:id}, jamBody).save();
-            return await Jams.find({_id:id})
+            return await Jams.find({_id:id});
         }catch(error){
             throw error;
         }

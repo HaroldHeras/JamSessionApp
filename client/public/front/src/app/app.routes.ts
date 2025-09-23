@@ -11,13 +11,15 @@ import { loginGuard } from './guards/login-guard';
 import { NuevaJam } from './pages/nueva-jam/nueva-jam';
 import { ListaJams } from './pages/lista-jams/lista-jams';
 import { JamDetailPrivate } from './pages/jam-detail-private/jam-detail-private';
+import { JamDetailPublic } from './pages/jam-detail-public/jam-detail-public';
 
 
 
 export const routes: Routes = [
     {path:"register",  component: Register},
     {path: "login", canActivate:[loginGuard], component: LogIn},
-    {path: "",  component: Home},
+    {path: "",  component: Home, },
+    {path: "publicJam/:id", component: JamDetailPublic},
     {path: "jamController", canActivateChild:[authGuard], component: JamController, children:[
         {path:"nuevaJam", component: NuevaJam},
         {path: "listaJams", component: ListaJams},

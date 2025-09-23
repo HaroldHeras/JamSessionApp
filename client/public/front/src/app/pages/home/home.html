@@ -7,7 +7,7 @@
 <ul>
     @for(jam of jams$ |async; track jam._id){
         <div >
-            <button id="{{jam._id}}" class="jam-{{jam.nombre}}">
+            <button id="{{jam._id}}" class="jam-{{jam.nombre}}" [routerLink]="['/publicJam', jam._id]">
                 {{jam.nombre}}
             </button> 
         </div>

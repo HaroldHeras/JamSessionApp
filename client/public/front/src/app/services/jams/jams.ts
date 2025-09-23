@@ -47,9 +47,7 @@ export class Jams {
 
   crearJam(nombre:string, canciones:Cancion[]):Observable<{ok:boolean, jamNueva:Jam}>{
 
-    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jam", {nombre, canciones}).pipe(
-      tap(()=> this.cargaPrivateJams())
-    );    
+    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jam", {nombre, canciones});
   }
 
   getJam(id:string):Observable<Jam>{
@@ -58,17 +56,28 @@ export class Jams {
 
   }
 
-  updateJam(id: string, jamBody: Object):Observable<any>{
+  updateJam(id: string, jamBody: Partial<Jam>):Observable<any>{
 
-    return this.http.put<Object>("/jam", {id, jamBody}).pipe(
-      tap(()=> this.cargaPrivateJams() )
+    return this.http.put<Jam[]>("/jam", {id, jamBody}).pipe(
+      tap((res)=>{
+        const jams = this.privateJamSubject.getValue();
+        const jamsActualizadas = jams.map((j)=>{
+          if(j._id===id) return res[0]
+          return j
+        })
+        this.privateJamSubject.next(jamsActualizadas)
+      })
     );
 
   }
 
   borraJam(id:string):Observable<any>{
     return this.http.delete<string>("/jam/"+id).pipe(
-      tap(()=> this.cargaPrivateJams() )
+      tap((res)=> {
+        const jams = this.privateJamSubject.getValue();
+        const jamsActualizadas = jams.filter((j)=> j._id !== id)
+        this.privateJamSubject.next(jamsActualizadas)
+      })
     );
   }
 
