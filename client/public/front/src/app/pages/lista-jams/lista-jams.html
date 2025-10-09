@@ -3,7 +3,7 @@
   <h2>JAMS DISPONIBLES</h2>
   
   <section>
-    <button matButton="elevated" [routerLink]="['/jamController/nuevaJam']" class="boton-nuevaJam">Crear Nueva Jam</button>
+    <button matButton="elevated" [routerLink]="['/jamController/nuevaJam']" class="boton-nuevaJam">NUEVA JAM</button>
     <ul>
         @for(jam of jams$ |async; track jam._id){
             
