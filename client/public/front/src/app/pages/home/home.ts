@@ -5,10 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Jam } from '../../interfaces/Jam.interface';
 import { Observable } from 'rxjs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, MatSlideToggleModule, MatCardModule, MatButtonModule,MatDividerModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

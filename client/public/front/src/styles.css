@@ -1,1 +1,20 @@
+
+@import "./custom-theme.scss";
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { 
+    margin: 0;
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface); 
+}
+
+
+
+button{
+    border-radius: 20px !important;
+    
+}
+button:hover{
+    color: var(--mat-sys-on-primary) !important;
+}

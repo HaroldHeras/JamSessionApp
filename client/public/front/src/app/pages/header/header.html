@@ -1,8 +1,58 @@
-<button [routerLink]="['/']" id="boton-inicio">Inicio</button>
-@if (auth$ | async) {
-    <button [routerLink]="['/jamController']" id="boton-control">Panel de Control</button>
-    <button (click)="logOut()" id="boton-logout">LogOut</button>
 
-}@else {
-    <button [routerLink]="['/login']" id="boton-login">LogIn</button>
-}
+<nav class="nav-menu">
+    @if (isMobile$ | async){
+
+        <button class="boton-movil"  [matMenuTriggerFor]="menu" aria-label="Menu desplegable">
+            <mat-icon class="icono-boton">reorder</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" style="display: flex; flex-direction: column;">
+            <button mat-menu-item [routerLink]="['/']">
+                <mat-icon>home</mat-icon>
+                <span>Inicio</span>
+            </button>
+            @if (auth$ | async) {
+                <button mat-menu-item [routerLink]="['/jamController']">
+                    <mat-icon>settings</mat-icon>
+                    <span>Panel de Control</span>
+                </button>
+                <button matButton [routerLink]="['/jamController']" >
+                    <mat-icon>account_circle</mat-icon>
+                    <span>Cuenta</span>
+                </button>
+                <button matButton (click)="logOut()" >
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>LogOut</span>
+                </button>
+
+            }@else {
+                <button matButton [routerLink]="['/login']" >
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>LogIn</span>
+                </button>
+            }
+            
+        </mat-menu>
+
+    }
+
+    @if ((isMobile$ |async)===false){
+
+            <button matButton [routerLink]="['/']" id="boton-inicio" >Inicio</button>
+            @if (auth$ | async) {
+                <button matButton [routerLink]="['/jamController']" id="boton-control">Panel de Control</button>
+                <button matButton [routerLink]="['/jamController']" id="boton-cuenta">Cuenta</button>
+                <button matButton (click)="logOut()" id="boton-logout">LogOut</button>
+
+            }@else {
+                <button matButton [routerLink]="['/login']" id="boton-login">LogIn</button>
+            }
+
+    }
+</nav>
+
+
+
+
+
+
+

@@ -1,17 +1,36 @@
-<p> Acceso Jam</p>
-
-<form action="">
-    <input #nombreUsuario id="input-username"  placeholder="Nombre Usuario"><br>
-
-    <input #password id="input-password" type="password"  placeholder="Escriba aqui la contraseña de acceso">
-
-    <button (click)="logIn(nombreUsuario.value, password.value)" class="boton-login">LogIn</button>
-</form>
-
-
-@if (acceso){
-    <p  style="color:green">{{mensaje}}</p>
-} @else {
-    <p  style="color:red">{{mensaje}}</p>
-}
+<body class="body-component">    
+    <section>
+        <h2>LOG-IN</h2>
+        
+        <form>
+            <mat-form-field>
+                <mat-label>Nombre Usuario</mat-label>
+                <input matInput #nombreUsuario type="text" >    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Contraseña</mat-label>
+                <input matInput #password  [type]="hide() ? 'password' : 'text'"> 
+                <button
+                    class="boton-hidden"
+                    matIconButton
+                    matSuffix
+                    (click)="clickEvent($event)"
+                    [attr.aria-label]="'Ocultar contraseña'"
+                    [attr.aria-pressed]="hide()"
+                >
+                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>   
+            </mat-form-field>        
+            @if (acceso){
+                <p  style="color:var(--mat-sys-primary);">{{mensaje}}</p>
+            } @else {
+                <p  style="color:red">{{mensaje}}</p>
+            }
+            <button (click)="logIn(nombreUsuario.value, password.value)" class="boton-login" type="submit">LogIn</button>
+        </form>
+        
+        
+        
+    </section>
+</body>
 

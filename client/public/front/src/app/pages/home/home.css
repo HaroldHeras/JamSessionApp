@@ -1,0 +1,60 @@
+
+
+
+.body-component{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 20px 15vh 20px;
+    
+}
+
+.app-logo{
+    width: 300px;
+    height: 300px;
+}
+
+
+
+.container{
+    text-align: center;
+    max-width: 400px;
+    gap:70px;
+    justify-content: space-around;
+    align-items: center;
+    height: 75%;
+
+}
+
+.titulo{
+    grid-area: titulo;
+    align-content: center;
+    font-weight: bold ;
+    font-size: x-large;
+
+}
+
+
+
+.card-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (min-width: 768px){
+    .app-logo{
+        width: 600px;
+        height: 600px;
+    }
+    .card-container{
+        min-width: 500px;
+
+    }
+}
+
+
+
+
+

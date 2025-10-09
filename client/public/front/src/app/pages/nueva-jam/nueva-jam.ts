@@ -4,10 +4,13 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Cancion } from '../../interfaces/Cancion.interfaz';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 @Component({
   selector: 'app-nueva-jam',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, MatInputModule, MatFormFieldModule],
   templateUrl: './nueva-jam.html',
   styleUrl: './nueva-jam.css'
 })

@@ -1,20 +1,27 @@
 
-<p>BIENVENIDO A LA PÁGINA DE JAM SESSIONS</p>
+<body class="body-component">
 
-<P>JAM SESSIONS ACTIVAS:</P>
+    <img src="assets/JamSessionsApp.png" alt="Logotipo-JamSessionsApp" class="app-logo">
+    <mat-divider></mat-divider>
 
-
-<ul>
-    @for(jam of jams$ |async; track jam._id){
-        <div >
-            <button id="{{jam._id}}" class="jam-{{jam.nombre}}" [routerLink]="['/publicJam', jam._id]">
-                {{jam.nombre}}
-            </button> 
+    <section class="container">
+        <h2 class="titulo">JAM SESSIONS ACTIVAS:</h2>
+        <div class="card-container">            
+                @for(jam of jams$ |async; track jam._id){
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>{{jam.nombre}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-actions>                        
+                            <button matButton="elevated" [routerLink]="['/publicJam', jam._id]">Entrar</button> 
+                        </mat-card-actions>
+                    </mat-card>
+                }
+            
         </div>
-    }
+        
+    </section>
     
-</ul>
+</body>
 
-<!-- <p>Elija una opcion</p>
-<button (click)="redirige($event)"  id="boton-espectador" >Espectador</button>
-<button (click)="redirige($event)" id="boton-musico" >Musico</button> -->
+

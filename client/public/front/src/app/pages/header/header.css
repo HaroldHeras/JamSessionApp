@@ -1,0 +1,20 @@
+.nav-menu{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5%;
+   
+}
+
+.boton-movil{
+    color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-surface);
+    border: none;
+    padding: 5px 0px 0px 0px ;
+    margin: 0;
+}
+.icono-boton{
+    font-size: 40px;
+    height: 40px;
+    width: 40px;
+
+}

@@ -5,10 +5,12 @@ import { CommonModule } from '@angular/common';
 import { Observable, tap } from 'rxjs';
 import { RouterModule, Router } from "@angular/router";
 import { Jam } from '../../interfaces/Jam.interface';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @Component({
   selector: 'app-lista-jams',
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, MatButtonModule],
   templateUrl: './lista-jams.html',
   styleUrl: './lista-jams.css'
 })
