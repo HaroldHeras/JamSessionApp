@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth/auth';
-import {  Observable, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';

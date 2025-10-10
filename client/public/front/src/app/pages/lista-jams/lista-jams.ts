@@ -6,11 +6,14 @@ import { Observable, tap } from 'rxjs';
 import { RouterModule, Router } from "@angular/router";
 import { Jam } from '../../interfaces/Jam.interface';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDelete } from '../modal-delete/modal-delete';
 
 
 @Component({
   selector: 'app-lista-jams',
-  imports: [FormsModule, CommonModule, RouterModule, MatButtonModule],
+  imports: [FormsModule, CommonModule, RouterModule, MatButtonModule, MatIconModule],
   templateUrl: './lista-jams.html',
   styleUrl: './lista-jams.css'
 })
@@ -18,13 +21,7 @@ export class ListaJams implements OnInit {
 
   jams$:Observable<Jam[]> | undefined;
 
-  ventanaModal:boolean = false;
-
-  idBorrar: string = "";
-  nombreBorrar: string = "";
-  
-
-  constructor(private router:Router, private jams:Jams){
+  constructor(private router:Router, private jams:Jams, private dialog: MatDialog){
   }
 
 
@@ -40,27 +37,28 @@ export class ListaJams implements OnInit {
 
   }
 
-  borrarJam():void{
+  borrarJam(id:string):void{
 
-    this.jams.borraJam(this.idBorrar).pipe(
-      tap(()=> this.cerrarModal() )
-    ).subscribe()
+    this.jams.borraJam(id).subscribe()
 
   }
 
   abrirModal(nombre:string, id:string):void{
 
-    this.nombreBorrar = nombre;
-    this.idBorrar = id;
-    this.ventanaModal = true;
-  }
+    const dialogRef = this.dialog.open(ModalDelete, {
+        width: "250px",
+        data:{
+          nombre
+        }
+    });
 
-  cerrarModal():void{
-    this.nombreBorrar = "";
-    this.idBorrar = "";
-    this.ventanaModal = false;
+    dialogRef.afterClosed().subscribe(
+      confirm => {
+        console.log(confirm)
+        if(confirm) this.borrarJam(id)
+      }
+    );
   }
- 
 
   
 

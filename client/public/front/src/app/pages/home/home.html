@@ -6,6 +6,10 @@
 
     <section class="container">
         <h2 class="titulo">JAM SESSIONS ACTIVAS:</h2>
+
+        @if ((jams$ |async)!.length === 0 ) {
+            <h4>"Aun no hay Jams Activas"</h4> 
+        }
         <div class="card-container">            
                 @for(jam of jams$ |async; track jam._id){
                     <mat-card>

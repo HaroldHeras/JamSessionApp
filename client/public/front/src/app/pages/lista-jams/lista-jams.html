@@ -4,21 +4,32 @@
   
   <section>
     <button matButton="elevated" [routerLink]="['/jamController/nuevaJam']" class="boton-nuevaJam">NUEVA JAM</button>
+
+    @if ((jams$ |async)!.length === 0 ) {
+      <h4>"Aun no has creado ninguna Jam"</h4> 
+    }
     <ul>
         @for(jam of jams$ |async; track jam._id){
             
-            <div class="jam-row">
+            <li>
                 <button matButton="elevated" [routerLink]="['/jamController/jam', jam._id]">
                     {{jam.nombre}}
                 </button>
-                
-                @if (jam.activated) {
-                    <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)">Desactivar</button>
-                }@else {
-                    <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)">Activar</button>
-                }
-                <button matButton="elevated" (click)="abrirModal(jam.nombre, jam._id)">Borrar</button>
-            </div>
+                <div class="settings-buttons">
+                  @if (jam.activated) {
+                      <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)">
+                       <mat-icon>visibility</mat-icon>
+                      </button>
+                  }@else {
+                      <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)">
+                        <mat-icon>visibility_off</mat-icon>
+                      </button>
+                  }
+                  <button matButton="elevated" (click)="abrirModal(jam.nombre, jam._id)">
+                      <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+            </li>
         }
         
     </ul>
@@ -28,14 +39,3 @@
 
 
 
-@if (ventanaModal) {
-  <div class="overlay">
-    <div class="modal">
-      <p>¿Seguro que quieres borrar la Jam "{{nombreBorrar}}"?<br> (Si pulsa en "Confirmar", perderá todos los datos relacionados con esta Jam)</p>
-      <div >
-        <button (click)="borrarJam()">Confirmar</button>
-        <button (click)="cerrarModal()">Cancelar</button>
-      </div>
-    </div>
-  </div>
-}

@@ -1,9 +1,22 @@
 
+.body-component{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    height: 10vh;
+    padding-right: 5%;
+    padding-left: 5%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
 
 .nav-menu{
     display: flex;
     justify-content: flex-end;
-    margin-right: 5%;
+    
+
 }
 
 .boton-movil{
@@ -19,3 +32,10 @@
     width: 40px;
 
 }
+
+.app-logo{
+    width: 60px;
+    height: 60px;
+    padding-top: 5px;
+}
+

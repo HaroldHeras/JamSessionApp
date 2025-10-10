@@ -1,0 +1,9 @@
+
+<h2 mat-dialog-title>¿Está seguro que desea borrar la jam "{{data.nombre}}?"</h2>
+<mat-dialog-content>
+    (Si pulsa en borrar, se perderán todos los datos de esta jam)
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button matButton [mat-dialog-close]="true" >Borrar</button>
+    <button matButton [mat-dialog-close]="false" cdkFocusInitial="false">Cancelar</button>  
+</div>
