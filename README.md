@@ -63,9 +63,12 @@ Soy un desarrollador junior full-stack dedicado profesionalmente a la música �
 Busco seguir creciendo profesionalmente en entornos donde pueda aportar creatividad, código limpio y ganas de aprender.
 
 📫 Contacto:
-    -[LinkedIn](https://www.linkedin.com/in/harold-de-las-heras-7422a0365/)
-    -[GitHub](https://github.com/HaroldHeras)
-    -haroldherascabezas@hotmail.com
+
+- [LinkedIn](https://www.linkedin.com/in/harold-de-las-heras-7422a0365/) 
+- [GitHub](https://github.com/HaroldHeras) 
+- haroldherascabezas@hotmail.com
+
+   
 
 ## ⚙️ Instalación
 
@@ -104,9 +107,9 @@ ROOT_PASS="(escribe aqui tu ROOT_PASS)"
 ```
 
 ## 💡🔜 Futuras mejoras
--​​Mejora del sistema de registro de usuarios.
--Implementación de roles en los diferentes usuarios registrados.
--Mejoras UX con animaciones e interacciones visuales
+    -​​Mejora del sistema de registro de usuarios.
+    -Implementación de roles en los diferentes usuarios registrados.
+    -Mejoras UX con animaciones e interacciones visuales
 
 ## 🏁 Licencia
 Este proyecto se distribuye bajo la licencia MIT.
