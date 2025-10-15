@@ -38,24 +38,25 @@ El objetivo del proyecto es ofrecer una experiencia fluida, moderna y atractiva 
 ## 🛠️ Tecnologías utilizadas
 
 **Frontend**
-    -🅰️ Angular 20
-    -RxJS, TypeScript
-    -HTML5, SCSS
-    -Angular(Router & Guards)
+- 🅰️ Angular 20
+- RxJS, TypeScript
+- HTML5, SCSS
+- Angular(Router & Guards)
+
 **Backend**
-    -🟩 Node.js con Express, Bcrypt, Cookie-Parser...
-    -JWT para autenticación
-    -BBDD locales y externas
-    -CORS, Cookies HTTP-only, SameSite controlado
+- 🟩 Node.js con Express, Bcrypt, Cookie-Parser...
+- JWT para autenticación
+- BBDD locales y externas
+- CORS, Cookies HTTP-only, SameSite controlado
 
 ## 🧠 Aprendizaje y objetivos
 
 Este proyecto nace como iniciativa personal para consolidar mis conocimientos en desarrollo full-stack.
 Durante su desarrollo, he trabajado especialmente en:
-    -La comunicación entre cliente y servidor usando observables y promesas.
-    -La seguridad de sesiones con cookies y autenticación por token.
-    -La organización modular del código con buenas prácticas de Angular.
-    -La creación de un diseño UI/UX adaptado a usuarios reales.    
+- La comunicación entre cliente y servidor usando observables y promesas.
+- La seguridad de sesiones con cookies y autenticación por token.
+- La organización modular del código con buenas prácticas de Angular.
+- La creación de un diseño UI/UX adaptado a usuarios reales.    
 
 ## 🧑‍💻 Sobre mí
 
@@ -96,8 +97,8 @@ ng serve
 ```
 
 **Configurar variables de entrono**
--Crear un archivo ".env" en la raiz de la carpeta del proyecto.
--Crear en el archivo ".env" las siguientes variables de entorno:
+- Crear un archivo ".env" en la raiz de la carpeta del proyecto.
+- Crear en el archivo ".env" las siguientes variables de entorno:
 ```sh
 SECRET_JWT_KEY="(escribe aqui tu secreto)"
 
@@ -107,9 +108,9 @@ ROOT_PASS="(escribe aqui tu ROOT_PASS)"
 ```
 
 ## 💡🔜 Futuras mejoras
-    -​​Mejora del sistema de registro de usuarios.
-    -Implementación de roles en los diferentes usuarios registrados.
-    -Mejoras UX con animaciones e interacciones visuales
+    -​​ Mejora del sistema de registro de usuarios.
+    - Implementación de roles en los diferentes usuarios registrados.
+    - Mejoras UX con animaciones e interacciones visuales
 
 ## 🏁 Licencia
 Este proyecto se distribuye bajo la licencia MIT.
