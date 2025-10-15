@@ -6,7 +6,7 @@
     width: 90%;
     height: 10vh;
     padding-right: 5%;
-    padding-left: 5%;
+    padding-left: 5%;    
     position: fixed;
     top: 0;
     z-index: 10;
@@ -15,8 +15,6 @@
 .nav-menu{
     display: flex;
     justify-content: flex-end;
-    
-
 }
 
 .boton-movil{

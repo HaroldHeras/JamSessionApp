@@ -1,6 +1,6 @@
    <body class="body-component">
 
-        <a [routerLink]="['/']">            
+        <a [routerLink]="['/']" title="Ir a Inicio">            
             <img src="assets/JamSessionsApp.png" alt="Logotipo-JamSessionsApp" class="app-logo">
         </a>
 
@@ -41,14 +41,14 @@
        
            @if ((isMobile$ |async)===false){
        
-                   <button matButton [routerLink]="['/']" id="boton-inicio" >Inicio</button>
+                   <button matButton [routerLink]="['/']" id="boton-inicio" title="Inicio">Inicio</button>
                    @if (auth$ | async) {
-                       <button matButton [routerLink]="['/jamController']" id="boton-control">Panel de Control</button>
-                       <button matButton [routerLink]="['/jamController']" id="boton-cuenta">Cuenta</button>
-                       <button matButton (click)="logOut()" id="boton-logout">LogOut</button>
+                       <button matButton [routerLink]="['/jamController']" id="boton-control" title="Panel Control">Panel de Control</button>
+                       <button matButton [routerLink]="['/jamController']" id="boton-cuenta" title="Cuenta">Cuenta</button>
+                       <button matButton (click)="logOut()" id="boton-logout" title="LogOut">LogOut</button>
        
                    }@else {
-                       <button matButton [routerLink]="['/login']" id="boton-login">LogIn</button>
+                       <button matButton [routerLink]="['/login']" id="boton-login" title="LogIn">LogIn</button>
                    }
        
            }

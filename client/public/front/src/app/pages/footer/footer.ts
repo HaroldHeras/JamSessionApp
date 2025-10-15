@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-footer',
-  imports: [MatDividerModule],
+  imports: [MatDivider],
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })

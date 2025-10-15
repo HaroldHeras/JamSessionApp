@@ -17,7 +17,7 @@
                             <mat-card-title>{{jam.nombre}}</mat-card-title>
                         </mat-card-header>
                         <mat-card-actions>                        
-                            <button matButton="elevated" [routerLink]="['/publicJam', jam._id]">ENTRAR</button> 
+                            <button matButton="elevated" [routerLink]="['/publicJam', jam._id]" title="Entrar a {{jam.nombre}}">ENTRAR</button> 
                         </mat-card-actions>
                     </mat-card>
                 }
