@@ -1,0 +1,49 @@
+.body-component{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 15vh;    
+}
+
+section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80vw;
+}
+
+.options{
+    width: 100%;
+}
+
+.add-cancion{    
+    border: 1px solid;
+}
+
+.contenedor-tabla{
+    width: 100%;
+}
+
+th{
+    color: var(--mat-sys-primary);
+}
+
+button{
+    color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-surface);
+    border: none;
+}
+
+.error{
+    color: red;
+}
+
+
+
+
+@media (min-width: 768px){
+  
+    
+  
+}

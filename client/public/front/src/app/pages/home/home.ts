@@ -7,11 +7,10 @@ import { Jam } from '../../interfaces/Jam.interface';
 import { Observable } from 'rxjs';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, CommonModule, RouterModule, MatCardModule, MatButtonModule,MatDividerModule],
+  imports: [FormsModule, CommonModule, RouterModule, MatCardModule, MatButtonModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

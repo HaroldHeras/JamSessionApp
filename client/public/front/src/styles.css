@@ -7,14 +7,24 @@ body {
     margin: 0;
     background-color: var(--mat-sys-surface);
     color: var(--mat-sys-on-surface); 
+    font-family: Oswald;
 }
 
 
 
 button{
-    border-radius: 20px !important;
-    
+    border-radius: 20px !important;    
 }
+
 button:hover{
     color: var(--mat-sys-on-primary) !important;
 }
+
+button.btn-important{
+    color:var(--mat-sys-on-primary) !important;
+    background-color: var(--mat-sys-primary) !important;
+}
+
+
+
+

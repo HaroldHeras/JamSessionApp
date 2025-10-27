@@ -19,7 +19,7 @@ import { ModalDelete } from '../modal-delete/modal-delete';
 })
 export class ListaJams implements OnInit {
 
-  jams$:Observable<Jam[]> | undefined;
+  jams$!:Observable<Jam[]>;
 
   constructor(private router:Router, private jams:Jams, private dialog: MatDialog){
   }
@@ -28,6 +28,7 @@ export class ListaJams implements OnInit {
   ngOnInit(): void {
     this.jams.cargaPrivateJams()   
     this.jams$ = this.jams.privateJams$;
+    
   }
 
 
@@ -43,18 +44,18 @@ export class ListaJams implements OnInit {
 
   }
 
-  abrirModal(nombre:string, id:string):void{
+  modalDelete(nombre:string, id:string, type:string):void{    
 
     const dialogRef = this.dialog.open(ModalDelete, {
         width: "250px",
         data:{
-          nombre
+          nombre,
+          type
         }
     });
 
     dialogRef.afterClosed().subscribe(
       confirm => {
-        console.log(confirm)
         if(confirm) this.borrarJam(id)
       }
     );

@@ -10,6 +10,7 @@ import { NuevaJam } from './pages/nueva-jam/nueva-jam';
 import { ListaJams } from './pages/lista-jams/lista-jams';
 import { JamDetailPrivate } from './pages/jam-detail-private/jam-detail-private';
 import { JamDetailPublic } from './pages/jam-detail-public/jam-detail-public';
+import { ListaCanciones } from './pages/lista-canciones/lista-canciones';
 
 
 
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {path: "publicJam/:id", component: JamDetailPublic},
     {path: "jamController", canActivateChild:[authGuard], component: JamController, children:[
         {path:"nuevaJam", component: NuevaJam},
+        {path:"listaCanciones", component: ListaCanciones},
         {path: "listaJams", component: ListaJams},
         {path: "jam/:id", component: JamDetailPrivate},
         {path:"", redirectTo: "listaJams", pathMatch: "full"}

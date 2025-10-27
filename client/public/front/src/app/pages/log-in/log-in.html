@@ -4,12 +4,13 @@
         
         <form>
             <mat-form-field>
-                <mat-label>Nombre Usuario</mat-label>
                 <input matInput #nombreUsuario type="text" >    
+                <mat-label>Nombre Usuario</mat-label>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Contraseña</mat-label>
+                
                 <input matInput #password  [type]="hide() ? 'password' : 'text'"> 
+                <mat-label>Contraseña</mat-label>
                 <button
                     class="boton-hidden"
                     matIconButton

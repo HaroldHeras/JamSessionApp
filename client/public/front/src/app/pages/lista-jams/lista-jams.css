@@ -7,15 +7,21 @@
   padding-bottom: 15vh;
 }
 
+.options{
+  display: flex;
+  gap: 10px;
+  font-size: small; 
+}
+
 section{
-  margin-left: 5%;
-  margin-right: 5%;
+  width: 80vw; 
   height: 75%;
 
 }
 
-.boton-nuevaJam{
-  border: 1px solid; 
+
+.boton-nuevaJam, .boton-listaCanciones{
+  border: 1px solid;
 }
 
 h4{
@@ -40,13 +46,3 @@ li:hover{
 
 
 
-@media (min-width: 768px){
-  .body-component{
-    max-width: 100%;
-        
-  }
-  section{
-    width: 50vw;
-  }
-  
-}

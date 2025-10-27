@@ -1,5 +1,5 @@
-
-button:focus{
-    color: var(--mat-sys-on-primary);
-    background-color: var(--mat-sys-primary);
+.btn-cancelar:focus{
+   color: var(--mat-sys-on-primary) !important;
+   background-color: var(--mat-sys-primary) !important;
 }
+

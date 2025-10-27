@@ -1,0 +1,13 @@
+.error{
+    color: red;
+    padding: 0;
+    font-size: small;
+}
+
+.mat-mdc-form-field:hover mat-label, .mat-mdc-form-field:hover input{
+    color: var(--mat-sys-on-primary);
+}
+
+.mat-mdc-form-field input:focus{
+    color: var(--mat-sys-on-background);
+}

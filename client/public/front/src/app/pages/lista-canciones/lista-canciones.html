@@ -1,0 +1,55 @@
+<body class="body-component">
+    <h2>LISTADO CANCIONES</h2>
+
+    <section>
+
+        <div class="options">
+            <button  matButton="elevated" class="add-cancion" (click)="creaCancion('addCancion')" title="Nueva Cancion">
+                <mat-icon>add</mat-icon>        
+                Nueva Cancion
+            </button>
+            
+
+        </div>
+
+        @if ((canciones$ |async)!.length === 0 ) {
+            <h4>"El listado de canciones está vacío"</h4> 
+        }
+        @else {
+            <div class="mat-elevation-z8 contenedor-tabla">
+                <table mat-table [dataSource]="(canciones$ | async)!">
+
+                    <ng-container matColumnDef="NOMBRE">
+                        <th mat-header-cell *matHeaderCellDef> NOMBRE </th>
+                        <td mat-cell *matCellDef="let cancion"> {{ cancion.nombre }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ARTISTA">
+                        <th mat-header-cell *matHeaderCellDef> ARTISTA </th>
+                        <td mat-cell *matCellDef="let cancion"> {{ cancion.artista }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef=" ">
+                        <th mat-header-cell *matHeaderCellDef>  </th>
+                        <td mat-cell *matCellDef="let cancion">
+                            <button (click)="editarCancion('editCancion', cancion )" title="Editar">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button (click)="borrarCancion(cancion._id, cancion.nombre,'soft')" title="Eliminar">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>                    
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+
+        }        
+    </section>
+    @if (messageVisible) {
+        <p class="error">{{message}}</p>
+    }
+    
+</body>
+

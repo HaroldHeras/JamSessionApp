@@ -4,10 +4,11 @@ import { Jam } from '../../interfaces/Jam.interface';
 import { Jams } from '../../services/jams/jams';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-jam-detail-private',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, MatTabsModule],
   templateUrl: './jam-detail-private.html',
   styleUrl: './jam-detail-private.css'
 })

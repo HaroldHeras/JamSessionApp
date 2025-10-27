@@ -32,6 +32,7 @@ export class Servidor{
     this.#DBModel = DBModel;
     this.middlewares();
     this.jamRoutes();
+    this.cancionesRoutes();
     this.routes();
     RootService.creaRootUser(Configuration.getRootCredentials(), this.#DBModel);
 
@@ -180,8 +181,8 @@ export class Servidor{
       if(!req.session.superUsuario) return res.status(401).send("No autorizado para esta accion");
 
       try{
-        const {nombre, canciones} = req.body;
-        const jamNueva = await this.#DBModel.creaJam(nombre, canciones);
+        const jam = req.body;
+        const jamNueva = await this.#DBModel.creaJam(jam);
         return res.status(201).json({ok: true, jamNueva});
       }catch(error){
         return res.status(400).send({ok: false, message:error.message})
@@ -222,6 +223,71 @@ export class Servidor{
 
     })
 
+
+  }
+
+
+  cancionesRoutes(){
+
+    this.#app.get("/cancionesAll", async (req,res)=>{
+      
+      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+      try{
+        const canciones = await this.#DBModel.getCancionesAll();
+        res.status(200).send(canciones)
+      }catch(error){
+        throw error;
+      }
+
+    })
+
+
+    this.#app.post("/canciones", async (req,res)=>{
+
+      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+      try{
+        const cancion = {...req.body};
+        const cancionNueva = await this.#DBModel.creaCancion(cancion);
+        return res.status(201).json({ok: true, cancionNueva});
+      }catch(error){
+        return res.status(400).send({ok: false, message:error.message})
+      }
+
+
+    }) 
+
+    this.#app.put("/canciones", async (req,res)=>{
+
+      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+
+      try{
+        const {id, cancionBody} = req.body;
+
+        const cancionActualizada = await this.#DBModel.updateCancion(id, cancionBody);
+
+        res.status(214).json(cancionActualizada);
+
+      }catch(error){
+        return res.status(400).send({ok: false, message:error.message})
+      }
+
+    })
+
+
+
+
+    this.#app.delete("/canciones/:id", async (req,res)=>{
+
+      if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
+      try{
+        const id= req.params.id;
+        await this.#DBModel.borraCancion(id);
+        res.status(200).json({message: "Cancion borrada correctamente"});
+      }catch(error){
+        throw error;
+      }
+
+    })
 
   }
 

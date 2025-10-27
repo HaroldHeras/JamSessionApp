@@ -27,7 +27,8 @@ const Jams = Schema("Jams", {
     activated:{type:Boolean, required:true, default:false},
     _id:{type: String, required: true},
     nombre:{type:String, required:true},
-    canciones: {type: Array, required: false}
+    fecha:{type:String, required: true},
+    canciones: {type: Array, required: false, default:[]}
 
 })
 
@@ -92,20 +93,17 @@ export class LocalRepository{
     }
 
 
-    async creaJam(nombreJam, canciones = []){
+    async creaJam(jam){
 
         try{
-            Validaciones.validaJam(nombreJam);
-            const jam = await Jams.findOne({nombre: nombreJam})
-            if(jam) throw new Error("Ya existe una Jam con ese nombre");
+
+            Validaciones.validaJam(jam);
+            const jamCoincide = await Jams.findOne({nombre: jam.nombre})
+            if(jamCoincide) throw new Error("Ya existe una Jam con ese nombre");
 
             const id = crypto.randomUUID();
 
-            const jamNueva= {
-                _id:id,
-                nombre:nombreJam,
-                canciones
-            }
+            const jamNueva= {_id:id,  ...jam,}
 
             await Jams.create(jamNueva).save();
 
@@ -157,6 +155,65 @@ export class LocalRepository{
             throw error;
         }
 
+    }
+
+
+    async getCancionesAll(){
+
+        try{
+            const canciones = await Canciones.find()
+            return canciones;
+        }catch{
+            throw error;
+        }
+
+    }
+
+    async borraCancion(id){
+
+        try{
+            await Canciones.remove({_id: id});
+        }catch(error){
+            throw error;
+        }
+
+    }
+
+
+     async creaCancion(cancion){
+
+        try{
+            Validaciones.validaCancion(cancion);
+            const cancionCoincide = await Canciones.findOne({nombre: cancion.nombre})
+            if(cancionCoincide) throw new Error("Ya existe una cancion con ese nombre");
+
+            const id = crypto.randomUUID();
+
+            const cancionNueva= {
+                _id:id,
+                nombre: cancion.nombre,
+                artista: cancion.artista
+            }
+
+            await Canciones.create(cancionNueva).save();
+
+            return cancionNueva;
+
+        }catch(error){
+            throw error;
+        }
+
+    }
+
+    async updateCancion(id, cancionBody){
+        try{
+            const cancion = await Canciones.findOne({nombre: cancionBody.nombre, artista: cancionBody.artista})
+            if(cancion) throw new Error("Ya existe una cancion con ese nombre");
+            await Canciones.update({_id:id}, cancionBody).save();
+            return await Canciones.find({_id:id});
+        }catch(error){
+            throw error;
+        }
     }
 
     

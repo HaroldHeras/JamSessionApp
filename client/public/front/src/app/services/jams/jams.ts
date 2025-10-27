@@ -45,9 +45,9 @@ export class Jams {
 
   }
 
-  crearJam(nombre:string, canciones:Cancion[]):Observable<{ok:boolean, jamNueva:Jam}>{
+  crearJam(jam:Partial<Jam>):Observable<{ok:boolean, jamNueva:Jam}>{
 
-    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jam", {nombre, canciones});
+    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jam", jam);
   }
 
   getJam(id:string):Observable<Jam>{

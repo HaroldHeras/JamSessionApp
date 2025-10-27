@@ -3,36 +3,49 @@
   <h2>JAMS DISPONIBLES</h2>
   
   <section>
-    <button matButton="elevated" [routerLink]="['/jamController/nuevaJam']" class="boton-nuevaJam" title="Nueva Jam">NUEVA JAM</button>
+    <div class="options">
+      <button matButton="elevated" [routerLink]="['/jamController/nuevaJam']" class="boton-nuevaJam" title="Nueva Jam">
+        <mat-icon>add</mat-icon>        
+        Nueva Jam
+      </button>
+      <button matButton="elevated" [routerLink]="['/jamController/listaCanciones']" class="boton-listaCanciones" title="Listado Canciones">
+        <mat-icon>list_alt</mat-icon>        
+        Listado Canciones
+      </button>
+
+    </div>
 
     @if ((jams$ |async)!.length === 0 ) {
       <h4>"Aun no has creado ninguna Jam"</h4> 
     }
-    <ul>
-        @for(jam of jams$ |async; track jam._id){
-            
-            <li>
-                <button matButton="elevated" [routerLink]="['/jamController/jam', jam._id]" title="Abrir {{jam.nombre}}">
-                    {{jam.nombre}}
-                </button>
-                <div class="settings-buttons">
-                  @if (jam.activated) {
-                      <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)" title="Desactivar">
-                       <mat-icon>visibility</mat-icon>
-                      </button>
-                  }@else {
-                      <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)" title="activar">
-                        <mat-icon>visibility_off</mat-icon>
-                      </button>
-                  }
-                  <button matButton="elevated" (click)="abrirModal(jam.nombre, jam._id)" title="Borrar">
-                      <mat-icon>delete</mat-icon>
+    @else {
+
+      <ul>
+          @for(jam of jams$ |async; track jam._id){
+              
+              <li>
+                  <button matButton="elevated" [routerLink]="['/jamController/jam', jam._id]" title="Abrir {{jam.nombre}}">
+                      {{jam.nombre}}
                   </button>
-                </div>
-            </li>
-        }
-        
-    </ul>
+                  <div class="settings-buttons">
+                    @if (jam.activated) {
+                        <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)" title="Desactivar">
+                         <mat-icon>visibility</mat-icon>
+                        </button>
+                    }@else {
+                        <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)" title="activar">
+                          <mat-icon>visibility_off</mat-icon>
+                        </button>
+                    }
+                    <button matButton="elevated" (click)="modalDelete(jam.nombre, jam._id, 'important')" title="Borrar">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+              </li>
+          }
+          
+      </ul>
+    }
   </section>
 </body>
 

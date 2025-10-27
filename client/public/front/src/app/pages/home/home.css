@@ -6,7 +6,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px 20px 15vh 20px;
+    width: 100%;
+    padding: 20px 0px 15vh 0px;
     
 }
 
@@ -19,7 +20,7 @@
 
 .container{
     text-align: center;
-    max-width: 400px;
+    max-width: 80%;
     gap:70px;
     justify-content: space-around;
     align-items: center;
@@ -28,7 +29,6 @@
 }
 
 .titulo{
-    grid-area: titulo;
     align-content: center;
     font-weight: bold ;
     font-size: x-large;

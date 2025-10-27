@@ -111,6 +111,7 @@ ROOT_PASS="(escribe aqui tu ROOT_PASS)"
     -​​ Mejora del sistema de registro de usuarios.
     - Implementación de roles en los diferentes usuarios registrados.
     - Mejoras UX con animaciones e interacciones visuales
+    - Integración de BBDD externas
 
 ## 🏁 Licencia
 Este proyecto se distribuye bajo la licencia MIT.

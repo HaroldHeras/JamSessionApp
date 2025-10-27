@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -11,4 +11,23 @@ import { MatButtonModule } from '@angular/material/button';
 export class ModalDelete {
 
   data = inject(MAT_DIALOG_DATA);
+
+  constructor(){
+
+    switch(this.data.type){
+      case "important":
+        this.data.mensaje = "(Si pulsa en borrar, se perderán todos los datos de esta jam)";
+        break;
+      case "soft":
+        this.data.mensaje = " ";
+        break;
+    }
+
+  }
+
+  imprime(){
+    console.log("Hola")
+  }
+
+  
 }

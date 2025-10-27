@@ -1,0 +1,38 @@
+
+
+
+    @if(data.type==="addCancion"){
+        <h2 mat-dialog-title>NUEVA CANCIÓN</h2>
+    }
+    @if(data.type==="editCancion"){
+        <h2 mat-dialog-title>EDITAR CANCIÓN</h2>
+    }
+    
+    <mat-dialog-content>
+        <p>Nombre de la canción:</p>
+        <mat-form-field>
+            <mat-label>*Canción</mat-label>
+            <input matInput [(ngModel)]="cancion.nombre"/>
+        </mat-form-field>
+       
+       
+        <p>Nombre del artista:</p>
+        <mat-form-field>
+            <mat-label>*Artista</mat-label>
+            <input matInput [(ngModel)]="cancion.artista"/>            
+        </mat-form-field>
+        @if (!requiredOk()) {
+            <p class="error">Debe rellenar todos los campos</p>
+        }
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button class="btn-important" matButton (click)="validaCampos()"  title="Guardar">Guardar</button>
+        <button matButton [mat-dialog-close] title="Cancelar">Cancelar</button> 
+    </mat-dialog-actions>
+
+
+    
+
+
+
+

@@ -4,9 +4,7 @@
 
 
 
-
 export class Validaciones{
-
 
     static validaUsuario(username, password){
 
@@ -22,11 +20,24 @@ export class Validaciones{
 
     }
 
-    static validaJam(nombreJam){
-        if(nombreJam.length===0) throw new Error("Debe escribir un nombre para la jam")
-        if(typeof nombreJam !== "string") throw new Error("El nombre de la jam debe ser de tipo alfanumérico")
+    static validaJam(jam){
+
+
+        if(jam.nombre.length===0) throw new Error("Debe escribir un nombre para la jam")
+        if(typeof jam.nombre !== "string") throw new Error("El nombre de la jam debe ser de tipo alfanumérico")
+        if(!jam.fecha ) throw new Error("Debe escribir una fecha")
+        if(new Date(jam.fecha) < new Date()) throw new Error("La Jam no puede ser anterior a la fecha y hora de hoy")
 
     }
+
+    static validaCancion(cancion){
+
+        if(cancion.nombre.length===0 || cancion.artista.length===0) throw new Error("Debe escribir un nombre y un artista")
+        if(typeof cancion.nombre !== "string" || typeof cancion.artista !== "string") throw new Error("El nombre de la jam debe ser de tipo alfanumérico")
+
+    }
+
+
 
 
 
