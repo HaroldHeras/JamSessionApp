@@ -2,14 +2,14 @@
     <section>
         <h2>LOG-IN</h2>
         
-        <form>
+        <form (submit)="validaCampos()" >
             <mat-form-field>
-                <input matInput #nombreUsuario type="text" >    
+                <input matInput [(ngModel)]="usuario" type="text" >    
                 <mat-label>Nombre Usuario</mat-label>
             </mat-form-field>
             <mat-form-field>
                 
-                <input matInput #password  [type]="hide() ? 'password' : 'text'"> 
+                <input matInput [(ngModel)]="password"  [type]="hide() ? 'password' : 'text'"> 
                 <mat-label>Contraseña</mat-label>
                 <button
                     class="boton-hidden"
@@ -22,12 +22,12 @@
                 <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>   
             </mat-form-field>        
-            @if (acceso){
-                <p  style="color:var(--mat-sys-primary);">{{mensaje}}</p>
+            @if (acceso()){
+                <p  style="color:var(--mat-sys-primary);">{{mensaje()}}</p>
             } @else {
-                <p  style="color:red">{{mensaje}}</p>
+                <p  style="color:red">{{mensaje()}}</p>
             }
-            <button (click)="logIn(nombreUsuario.value, password.value)" class="boton-login" type="submit" title="LogIn">LOGIN</button>
+            <button matButton (click)="validaCampos()" class="boton-login" type="submit" title="LogIn">LOGIN</button>
         </form>
         
         

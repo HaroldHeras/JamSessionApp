@@ -24,9 +24,9 @@ export class Canciones {
 
   }
 
-  creaCancion(nombre:string, artista:string): Observable<{ok:boolean, cancionNueva:Cancion}>{
+  creaCancion(cancionNueva:Partial<Cancion>): Observable<{ok:boolean, cancionNueva:Cancion}>{
 
-    return this.http.post<{ok:boolean, cancionNueva:Cancion}>("/canciones", {nombre, artista}).pipe(
+    return this.http.post<{ok:boolean, cancionNueva:Cancion}>("/canciones", cancionNueva).pipe(
       tap((res)=>{
         const canciones = [...this.cancionesSubject.getValue()];
         canciones.unshift(res.cancionNueva);

@@ -1,16 +1,61 @@
 
 <body class="body-component">
-    <h2>JAM "{{(jam$ | async)?.nombre}}"</h2>
+<h2>JAM "{{jam().nombre}}"</h2>
+
     <section>
         <div class="settings">
-
+            <button  matButton="elevated" [routerLink]="['/jamController/jamForm/edit/', jam()._id]" title="Editar Jam">
+                <mat-icon>edit</mat-icon>        
+                Editar Jam
+            </button>
+            <button  matButton="elevated" class="editar" (click)="agregarCanciones()" title="Agregar canciones">
+                <mat-icon>add</mat-icon>        
+                Agregar Canciones
+            </button>
         </div>
-        <mat-tab-group class="content">
-            <mat-tab label="First"> Content 1 </mat-tab>
-            <mat-tab label="Second"> Content 2 </mat-tab>
-            <mat-tab label="Third"> Content 3 </mat-tab>
-        </mat-tab-group>
+        @if (ok) {
+            <h3 style="color: var(--mat-sys-primary);">{{mensaje}}</h3>
+        }@else{
+            <h3 style="color: red;">{{mensaje}}</h3>
+        }
+        <form class="content">
+            <mat-tab-group>
+                <mat-tab label="REPERTORIO">
+                    <ul>
+                        @for (c of jam().canciones; track c._id) {
+                            <li>{{c.nombre}}</li>
+                        }
+                    </ul>
+                </mat-tab>
+                <mat-tab label="PETICIONES"> Content 2 </mat-tab>
+            </mat-tab-group>
+        </form>
+        <div class="instrumentos">
+            <h3>INSTRUMENTOS DISPONIBLES:</h3>
+            <mat-divider></mat-divider>
+            <ul>
+                @for (instrumento of jam().instrumentos; track $index) {
+                    <li>{{instrumento.nombre}}</li>
+                }
+            </ul>
+            
+        </div>
+        @if(jam().ubicacion?.direccion !==""){
+            <div style="display: flex; flex-direction: column; width: 100%; ">
+                <h3 style="margin-bottom: 3px;">LUGAR DE LA JAM: "{{jam().ubicacion?.direccion}}"</h3>
+                <mat-divider style="margin-bottom: 20px;"></mat-divider>
+                <iframe 
+                    [src]="iframe()"                             
+                    style="height: 500px; border: none;"
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Mapa de Google Maps de la dirección seleccionada">
+                </iframe>
+            </div>
+        }
     </section>
+
+
     
 </body>
-

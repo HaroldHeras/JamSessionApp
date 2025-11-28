@@ -26,13 +26,5 @@ form{
 }
 
 .boton-login{
-    border: 1px solid;
-    background-color: var(--mat-sys-surface);
-    color: var(--mat-sys-primary);
-    height: 40px;
-    font-weight: bolder; 
-}
-.boton-login:hover{
-    color: var(--mat-sys-on-primary);
-    background-color: var(--mat-sys-primary);
+    border: 1px solid;    
 }

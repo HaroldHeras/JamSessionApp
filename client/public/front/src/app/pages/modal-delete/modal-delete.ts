@@ -25,9 +25,6 @@ export class ModalDelete {
 
   }
 
-  imprime(){
-    console.log("Hola")
-  }
 
   
 }

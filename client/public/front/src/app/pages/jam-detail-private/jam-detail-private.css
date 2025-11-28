@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 15vh;
+
 }
 
 h2{
@@ -10,8 +11,35 @@ h2{
     margin-left: 20px;
 }
 
+section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    width: 80vw;
+}
 
+.settings{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 5px;
+
+}
+
+.settings button{
+    border: 1px solid var(--mat-sys-primary);
+    width: auto;
+}
 
 .content{
-    width: 80vw;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.instrumentos{
+    align-self: self-start;
+    justify-content: start;
+}
+.instrumentos h3{
+    margin-bottom: 3px;
 }

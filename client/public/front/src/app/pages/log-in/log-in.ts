@@ -3,22 +3,25 @@ import { Router} from '@angular/router';
 import { Auth } from '../../services/auth/auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {MatInputModule} from '@angular/material/input';
+import {MatInput} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon } from '@angular/material/icon';
+import { HttpResponse } from '@angular/common/http';
+import { MatButton } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-log-in',
-  imports: [FormsModule, CommonModule, MatInputModule, MatFormFieldModule, MatIconModule],
+  imports: [FormsModule, CommonModule, MatInput, MatFormFieldModule, MatIcon, MatButton],
   templateUrl: './log-in.html',
   styleUrl: './log-in.css'
 })
 export class LogIn {
 
-
-  acceso:boolean | null = null;
-  mensaje:string = "";
+  usuario:string = "";
+  password:string = "";
+  acceso = signal(true);
+  mensaje = signal("");
   hide = signal(true);
 
 
@@ -33,19 +36,38 @@ export class LogIn {
    
   }
 
-  logIn(nombreUsuario:string, password:string){
+  validaCampos(){
+    if(this.usuario.trim().length < 6){
+      this.acceso.set(false);
+      this.mensaje.set("El nombre de usuario debe contener mínimo 6 carácteres")
+      return;
+    }
+    if(this.password.trim().length < 9){
+      this.acceso.set(false);
+      this.mensaje.set("La contraseña debe contener mínimo 9 carácteres")
+      return;
+    }
 
-    this.authService.logIn(nombreUsuario,password).subscribe({
-      next: (data)=> {
-        this.acceso = data.ok
-        this.mensaje = "Contraseña correcta. Redirigiendo al controlador..."
-        setTimeout(()=>{
-          this.router.navigate(["/jamController"]); 
-        },1500);   
+    this.logIn();
+  }
+
+  logIn(){
+
+    this.authService.logIn(this.usuario,this.password).subscribe({
+      next: (response: HttpResponse<any>)=> {
+        if(response.status===200){
+          this.acceso.set(true);
+          this.mensaje.set("Contraseña correcta. Redirigiendo al controlador...")
+          setTimeout(()=>{
+            this.router.navigate(["/jamController"]); 
+          },1500);   
+        }
       },
       error: (err)=>{
-        this.acceso = err.ok
-        this.mensaje = err.error.message
+        if(err.status===401){
+          this.acceso.set(false)
+          this.mensaje.set(err.error.message);
+        }
       }
     })
   }

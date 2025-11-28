@@ -99,10 +99,10 @@ export class Servidor{
           sameSite:"strict",
           maxAge: 1000 * 60 * 60 * 24
         })
-        .send({ok:true, usuarioVerificado});
+        .send(usuarioVerificado);
   
       }catch(error){  
-        res.status(401).json({ok: false, message: error.message});  
+        res.status(401).send({message: error.message});  
       } 
   
     })
@@ -145,12 +145,12 @@ export class Servidor{
 
     this.#app.get("/jamsAll", async (req,res)=>{
 
-      const {activated}=req.query;
+      const {visible}=req.query;
       try{
         const jams = await this.#DBModel.getJamsAll();
-        if(activated){
-            const jamsActivated = jams.filter(jam=> jam.activated);
-            return res.status(200).send(jamsActivated); 
+        if(visible){
+            const jamsVisible = jams.filter(jam=> jam.visible);
+            return res.status(200).send(jamsVisible); 
         }     
         if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
         return res.status(200).send(jams)
@@ -183,9 +183,9 @@ export class Servidor{
       try{
         const jam = req.body;
         const jamNueva = await this.#DBModel.creaJam(jam);
-        return res.status(201).json({ok: true, jamNueva});
+        return res.status(201).json(jamNueva);
       }catch(error){
-        return res.status(400).send({ok: false, message:error.message})
+        return res.status(400).send({message:error.message})
       }
 
 
@@ -195,17 +195,12 @@ export class Servidor{
     this.#app.put("/jam", async (req,res)=>{
 
       if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
-
       try{
-
         const {id, jamBody} = req.body;
-
         const jamActualizada = await this.#DBModel.updateJam(id, jamBody);
-
-        res.status(214).json(jamActualizada);
-
+        res.status(214).json(jamActualizada); 
       }catch(error){
-        throw error;
+        return res.status(406).send({message:error.message});
       }
 
     })

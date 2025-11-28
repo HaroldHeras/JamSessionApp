@@ -5,12 +5,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule,} from '@angular/forms';
 @Component({
-  selector: 'app-modal-create',
+  selector: 'app-modal-cancion-form',
   imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, MatFormFieldModule],
-  templateUrl: './modal-create.html',
-  styleUrl: './modal-create.css'
+  templateUrl: './modal-cancion-form.html',
+  styleUrl: './modal-cancion-form.css'
 })
-export class ModalCreate {
+export class ModalCancionForm {
 
   readonly dialogRef = inject(MatDialogRef<this>);
   readonly data = inject(MAT_DIALOG_DATA);
@@ -26,7 +26,7 @@ export class ModalCreate {
         this.requiredOk.set(false);
         setTimeout(()=>{this.requiredOk.set(true)},2000);
         return;
-    }
+    }    
     this.dialogRef.close(this.cancion);
   }
 

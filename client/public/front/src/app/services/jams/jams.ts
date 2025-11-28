@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -34,7 +34,7 @@ export class Jams {
 
   cargaPublicJams():void{
 
-    this.http.get<Jam[]>("/jamsAll?activated=true").subscribe({
+    this.http.get<Jam[]>("/jamsAll?visible=true").subscribe({
       next: (data)=>{
         if(data.length!==0) return this.publicJamSubject.next(data)
         return this.publicJamSubject.next([])
@@ -45,9 +45,9 @@ export class Jams {
 
   }
 
-  crearJam(jam:Partial<Jam>):Observable<{ok:boolean, jamNueva:Jam}>{
+  crearJam(jam:Partial<Jam>):Observable<HttpResponse<Jam>>{
 
-    return this.http.post<{ok:boolean, jamNueva:Jam}>("/jam", jam);
+    return this.http.post<Jam>("/jam", jam, {observe: "response"});
   }
 
   getJam(id:string):Observable<Jam>{
@@ -56,13 +56,14 @@ export class Jams {
 
   }
 
-  updateJam(id: string, jamBody: Partial<Jam>):Observable<any>{
+  updateJam(id: string, jamBody: Partial<Jam>):Observable<HttpResponse<Jam>>{
 
-    return this.http.put<Jam[]>("/jam", {id, jamBody}).pipe(
+    return this.http.put<Jam>("/jam", {id, jamBody}, {observe: "response"}).pipe(
       tap((res)=>{
+
         const jams = this.privateJamSubject.getValue();
         const jamsActualizadas = jams.map((j)=>{
-          if(j._id===id) return res[0]
+          if(j._id===id && res.body) return res.body
           return j
         })
         this.privateJamSubject.next(jamsActualizadas)

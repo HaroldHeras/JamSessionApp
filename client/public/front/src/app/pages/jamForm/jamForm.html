@@ -1,0 +1,111 @@
+<body class="body-component">    
+
+    @if(modoEdicion){
+        <h2>EDITAR JAM</h2>
+    }@else {
+        <h2>NUEVA JAM</h2>
+    }
+        <section>
+            <form>                
+                    <mat-form-field>
+                        <mat-label>*Nombre de la Jam Session</mat-label>
+                        <input matInput [(ngModel)]="nombre" type="text">    
+                    </mat-form-field>                    
+            </form>
+            <form class="form-fecha">   
+                    <mat-form-field>
+                        <mat-label>*Dia de la Jam Session</mat-label>
+                        <input matInput [matDatepicker]="datepicker" [(ngModel)]="fecha">
+                        <mat-datepicker #datepicker/>
+                        <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>*Hora de la Jam Session</mat-label>
+                        <input matInput
+                            [matTimepicker]="timepicker"
+                            [(ngModel)]="fecha"
+                            [ngModelOptions]="{updateOn: 'blur'}">
+                        <mat-timepicker #timepicker/>
+                        <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+                    </mat-form-field>
+            </form>                   
+    </section>
+    <section>
+        <h4>INSTRUMENTOS:</h4>
+        
+        @for (instrumento of instrumentos(); track $index) {
+                <div style="display: flex; flex-direction: column; margin-bottom: 40px;">
+                    <mat-form-field>
+                        <mat-label>Instrumento {{$index+1}}</mat-label>
+                        <input matInput [(ngModel)]="instrumento.nombre" type="text">    
+                    </mat-form-field>  
+                    <button style="width: 20%; height: 5%;" matButton (click)="eliminaInstrumento($index)" [hidden]="instrumentos().length===1">
+                        Eliminar
+                    </button>
+                </div>
+        }
+
+        <button matButton="text" (click)="nuevoInstrumento()">Añadir instrumento</button>
+               
+        
+    </section>
+    <section class="section-direccion">
+        <h4>DIRECCION:</h4>
+        <div>
+            <form>
+                <mat-form-field>
+                    <mat-label>Dirección de la Jam Session</mat-label>
+                    <input matInput [(ngModel)]="direccion" placeholder="(Ej: Calle Gran Vía 1, Madrid)"/>
+                </mat-form-field>
+                <div class="botonera-buscar">
+                    <button matButton class="btn-buscar" (click)="busqueda.set(direccion())" [disabled]="direccion().trim().length===0">BUSCAR DIRECCION</button>
+                    @if (direccion().trim().length!==0 || busqueda().trim().length!==0) { 
+                        <button matButton class="btn-borrar" (click)="resetDireccion()">LIMPIAR BUSQUEDA</button>
+                        
+                     }
+                </div>
+            </form>                    
+            
+            
+        </div>
+        <div class="resultado-busqueda">
+
+            <!-- Dirección Seleccionada y Botón de Mapa -->
+            @if (busqueda()) {
+                <div>
+                    <p style="font-weight: bolder; ">Dirección seleccionada:</p>
+                    <p style="justify-self: center; font-style: italic;">{{ busqueda() }}</p>
+                </div>
+            }    
+            <!-- Mapa de Google Maps (Iframe) -->
+            @if (mapUrl()) {
+                <div>
+                    <h2>Ubicación en Google Maps</h2>
+                    <iframe 
+                        class="frame-maps"
+                        [src]="mapUrl()"                             
+                        style="height: 500px; border: none;"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Mapa de Google Maps de la dirección seleccionada">
+                    </iframe>
+                </div>
+            }
+        </div>
+    </section>
+    @if (ok){
+        <p  style="color:var(--mat-sys-primary); font-weight: bolder;">{{mensaje}}</p>
+    } @else {
+        <p  style="color:red; font-weight: bolder;">{{mensaje}}</p>
+    }
+
+    @if (modoEdicion) {
+        <button matButton (click)="validaCampos()" class="btn-guardar" title="Guardar">GUARDAR</button>
+    }@else {
+        <button matButton (click)="validaCampos()" class="btn-crear" title="Crear">CREAR JAM</button>
+    }
+        
+
+
+</body>

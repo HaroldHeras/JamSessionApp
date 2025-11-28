@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cancion } from '../../interfaces/Cancion.interfaz';
 import { Canciones } from '../../services/canciones/canciones';
@@ -6,8 +6,6 @@ import { AsyncPipe } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { MatIcon } from "@angular/material/icon";
 import { MatDialog } from '@angular/material/dialog';
-import { ModalDelete } from '../modal-delete/modal-delete';
-import { ModalCreate } from '../modal-create/modal-create';
 import {MatButtonModule} from '@angular/material/button';
 
 
@@ -35,76 +33,97 @@ export class ListaCanciones {
 
   creaCancion(type:string){
 
-    const dialogRef = this.dialog.open(ModalCreate, {
-          width: "250px",
-          data:{
-            type
-          }
-    });
-  
-    dialogRef.afterClosed().subscribe(
-      result => {
-          if(result!==undefined){
-            this.canciones.creaCancion(result.nombre, result.artista).subscribe({
-              error:(err)=>{
-                this.message = err.error.message;
-                this.messageVisible=true;
-                setTimeout(()=>{
-                  this.messageVisible=false
-                  this.message="";
-                }, 2000);
+    /*Importamos el Componente "ModalCancionForm" de esta forma en vez de en la lista de importancioens arriba, 
+    para implementar el LazyLoad*/
+    import("../modal-cancion-form/modal-cancion-form")
+      .then(({ModalCancionForm})=>{
+
+        const dialogRef = this.dialog.open(ModalCancionForm, {
+              width: "250px",
+              data:{
+                type
               }
-            });
-          } 
-      }
-    );
+        });
+      
+        dialogRef.afterClosed().subscribe(
+          result => {
+              if(result!==undefined){
+                this.canciones.creaCancion({nombre:result.nombre, artista:result.artista}).subscribe({
+                  error:(err)=>{
+                    this.message = err.error.message;
+                    this.messageVisible=true;
+                    setTimeout(()=>{
+                      this.messageVisible=false
+                      this.message="";
+                    }, 2000);
+                  }
+                });
+              } 
+          }
+        );
+
+
+      }).catch(err=>{
+        console.error("Error al cargar modal 'Modal Create'", err);
+      })
   }
 
   editarCancion(type:string, cancion:Cancion){
 
-    const dialogRef = this.dialog.open(ModalCreate, {
-          width: "250px",
-          data:{
-            type,
-            nombre:cancion.nombre,
-            artista: cancion.artista
-          }
-      });
-  
-      dialogRef.afterClosed().subscribe(
-        result => {
-          if(result!==undefined){
-            this.canciones.editaCancion(cancion._id,{nombre:result.nombre, artista:result.artista}).subscribe({
-              error:(err)=>{
-                this.message = err.error.message;
-                this.messageVisible=true;
-                setTimeout(()=>{
-                  this.messageVisible=false
-                  this.message="";
-                }, 2000);
+    import("../modal-cancion-form/modal-cancion-form")
+      .then(({ModalCancionForm})=>{
+        
+        const dialogRef = this.dialog.open(ModalCancionForm, {
+              width: "250px",
+              data:{
+                type,
+                nombre:cancion.nombre,
+                artista: cancion.artista
               }
-            });
-          } 
-        }
-      );
+          });
+      
+          dialogRef.afterClosed().subscribe(
+            result => {
+              if(result!==undefined){
+                this.canciones.editaCancion(cancion._id,{nombre:result.nombre, artista:result.artista}).subscribe({
+                  error:(err)=>{
+                    this.message = err.error.message;
+                    this.messageVisible=true;
+                    setTimeout(()=>{
+                      this.messageVisible=false
+                      this.message="";
+                    }, 2000);
+                  }
+                });
+              } 
+            }
+          );
+
+      })
+
 
   }
 
   borrarCancion(id:string, nombre:string, type:string):void{
 
-    const dialogRef = this.dialog.open(ModalDelete, {
-          width: "250px",
-          data:{
-            nombre,
-            type
-          }
-      });
-  
-      dialogRef.afterClosed().subscribe(
-        confirm => {
-          if(confirm) this.canciones.borraCancion(id).subscribe();
-        }
-      );
+    import("../modal-delete/modal-delete")
+      .then(({ModalDelete})=>{
+
+        const dialogRef = this.dialog.open(ModalDelete, {
+              width: "250px",
+              data:{
+                type,
+                nombre
+              }
+          });
+      
+          dialogRef.afterClosed().subscribe(
+            confirm => {
+              if(confirm) this.canciones.borraCancion(id).subscribe();
+            }
+          );
+      })
+
 
   };
 

@@ -4,7 +4,7 @@
   
   <section>
     <div class="options">
-      <button matButton="elevated" [routerLink]="['/jamController/nuevaJam']" class="boton-nuevaJam" title="Nueva Jam">
+      <button matButton="elevated" [routerLink]="['/jamController/jamForm/create']" class="boton-nuevaJam" title="Nueva Jam">
         <mat-icon>add</mat-icon>        
         Nueva Jam
       </button>
@@ -28,12 +28,12 @@
                       {{jam.nombre}}
                   </button>
                   <div class="settings-buttons">
-                    @if (jam.activated) {
-                        <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)" title="Desactivar">
+                    @if (jam.visible) {
+                        <button matButton="elevated" (click)="switchJam(jam._id, jam.visible)" title="Ocultar">
                          <mat-icon>visibility</mat-icon>
                         </button>
                     }@else {
-                        <button matButton="elevated" (click)="switchJam(jam._id, jam.activated)" title="activar">
+                        <button matButton="elevated" (click)="switchJam(jam._id, jam.visible)" title="Hacer visible">
                           <mat-icon>visibility_off</mat-icon>
                         </button>
                     }

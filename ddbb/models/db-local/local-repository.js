@@ -23,11 +23,13 @@ const User = Schema("User", {
 
 
 const Jams = Schema("Jams", {
-    
+    visible: {type:Boolean, required: true, default: false},
     activated:{type:Boolean, required:true, default:false},
     _id:{type: String, required: true},
     nombre:{type:String, required:true},
     fecha:{type:String, required: true},
+    instrumentos:{type:Array, required: true},
+    ubicacion:{type:Object, required:true},
     canciones: {type: Array, required: false, default:[]}
 
 })
@@ -36,7 +38,22 @@ const Jams = Schema("Jams", {
 const Canciones = Schema("Canciones", {
     _id:{type: String, required: true},
     nombre:{type:String, required:true},
-    artista:{type:String, required: true}
+    artista:{type:String, required: true},
+    participantes:{type:Array, required:false, default: []}
+})
+
+
+const Propuestas = Schema("Propuestas", {
+    _id:{type: String, required: true},
+    jamId:{type: String, required: true},
+    tipo: {type: String, required: true},
+    titulo: {type: String, required: true},
+    artista: {type: String, required: false, default: ""},
+    participantes: {type: Array, required: false, default: []},
+    propuestoPor: {type: String, required: true},
+    dedicatoria: {type: String, required: false, default: ""},
+    estado: {type: String, required: true},
+
 })
 
 
@@ -140,8 +157,13 @@ export class LocalRepository{
 
     async updateJam(id, jamBody){
         try{
+            if(Object.hasOwn(jamBody, 'nombre') || Object.hasOwn(jamBody, 'fecha') || Object.hasOwn(jamBody, 'ubicacion')){
+                Validaciones.validaJam(jamBody);
+                const jamCoincide = await Jams.findOne({nombre: jamBody.nombre})
+                if(jamCoincide && jamCoincide._id!==id) throw new Error("Ya existe una Jam con ese nombre");
+            }
             await Jams.update({_id:id}, jamBody).save();
-            return await Jams.find({_id:id});
+            return await Jams.find({_id:id})[0];
         }catch(error){
             throw error;
         }

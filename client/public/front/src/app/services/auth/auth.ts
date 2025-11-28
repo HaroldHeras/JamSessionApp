@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, firstValueFrom, Observable, tap } from 'rxjs';
 
 @Injectable({
@@ -26,9 +26,9 @@ export class Auth {
     }
 
 
-    logIn(usuario: string, clave:string): Observable<any> {
+    logIn(usuario: string, clave:string): Observable<HttpResponse<Object>> {
 
-      return this.http.post<Object>("/login", {username: usuario, password:clave});
+      return this.http.post<Object>("/login", {username: usuario, password:clave}, {observe: "response"});
 
     }
 

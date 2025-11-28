@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NuevaJam } from './nueva-jam';
+import { ModalAddCanciones } from './modal-add-canciones';
 
-describe('NuevaJam', () => {
-  let component: NuevaJam;
-  let fixture: ComponentFixture<NuevaJam>;
+describe('ModalAddCanciones', () => {
+  let component: ModalAddCanciones;
+  let fixture: ComponentFixture<ModalAddCanciones>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NuevaJam]
+      imports: [ModalAddCanciones]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NuevaJam);
+    fixture = TestBed.createComponent(ModalAddCanciones);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
