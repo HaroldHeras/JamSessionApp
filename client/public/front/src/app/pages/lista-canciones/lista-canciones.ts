@@ -85,7 +85,7 @@ export class ListaCanciones {
           dialogRef.afterClosed().subscribe(
             result => {
               if(result!==undefined){
-                this.canciones.editaCancion(cancion._id,{nombre:result.nombre, artista:result.artista}).subscribe({
+                this.canciones.editaCancion(cancion.id,{nombre:result.nombre, artista:result.artista}).subscribe({
                   error:(err)=>{
                     this.message = err.error.message;
                     this.messageVisible=true;

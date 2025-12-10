@@ -4,7 +4,7 @@
 
     <section>
         <div class="settings">
-            <button  matButton="elevated" [routerLink]="['/jamController/jamForm/edit/', jam()._id]" title="Editar Jam">
+            <button  matButton="elevated" [routerLink]="['/jamController/jamForm/edit/', jam().id]" title="Editar Jam">
                 <mat-icon>edit</mat-icon>        
                 Editar Jam
             </button>
@@ -22,7 +22,7 @@
             <mat-tab-group>
                 <mat-tab label="REPERTORIO">
                     <ul>
-                        @for (c of jam().canciones; track c._id) {
+                        @for (c of jam().canciones; track c.id) {
                             <li>{{c.nombre}}</li>
                         }
                     </ul>

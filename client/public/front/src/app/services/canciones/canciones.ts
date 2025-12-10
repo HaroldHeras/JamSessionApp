@@ -37,11 +37,11 @@ export class Canciones {
   }
 
   editaCancion(id:string, cancionBody:Partial<Cancion>){
-      return this.http.put<Cancion[]>("/canciones", {id, cancionBody}).pipe(
+      return this.http.put<Cancion>("/canciones", {id, cancionBody}).pipe(
         tap((res)=>{
           const canciones = [...this.cancionesSubject.getValue()];
           const cancionesActualizadas= canciones.map((c)=>{
-            if(c._id===id) return res[0]
+            if(c.id===id) return res
             return c;
           })
            this.cancionesSubject.next(cancionesActualizadas);
@@ -51,10 +51,10 @@ export class Canciones {
 
   borraCancion(id:string):Observable<any>{
     
-        return this.http.delete<string>("/canciones/"+id).pipe(
+        return this.http.delete<{message:string}>("/canciones/"+id).pipe(
           tap((res)=> {
             const canciones = this.cancionesSubject.getValue();
-            const cancionesActualizadas = canciones.filter((c)=> c._id !== id)
+            const cancionesActualizadas = canciones.filter((c)=> c.id !== id)
             this.cancionesSubject.next(cancionesActualizadas)
           })
         );

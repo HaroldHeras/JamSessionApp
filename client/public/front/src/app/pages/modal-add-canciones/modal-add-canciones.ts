@@ -7,6 +7,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from "@angular/forms";
 import { MatButton } from '@angular/material/button';
+import { CancionEnJam } from '../../interfaces/CancionEnJam.interface';
 
 @Component({
   selector: 'app-modal-add-canciones',
@@ -16,13 +17,13 @@ import { MatButton } from '@angular/material/button';
 })
 export class ModalAddCanciones {
 
-  readonly data:Cancion[] = inject(MAT_DIALOG_DATA);
+  readonly data:CancionEnJam[] = inject(MAT_DIALOG_DATA);
   displayedColumns:string[] = ["NOMBRE", "ARTISTA", " "];
   cancionesSignal;
-  seleccion:Cancion[] = []
-  private readonly idsCancionesAgregadas = new Set(this.data.map(c=> c._id));
+  seleccion:CancionEnJam[] = []
+  private readonly idsCancionesAgregadas = new Set(this.data.map(c=> c.id));
   public readonly cancionesDisponibles = computed(()=>{
-    return this.cancionesSignal().filter(c=> !this.idsCancionesAgregadas.has(c._id))
+    return this.cancionesSignal().filter(c=> !this.idsCancionesAgregadas.has(c.id))
   })
 
 
@@ -36,9 +37,9 @@ export class ModalAddCanciones {
   switchCancion(cancion:Cancion,checked:boolean){
 
     if(checked){
-      this.seleccion = [...this.seleccion, cancion];
+      this.seleccion = [...this.seleccion, {...cancion, participantes:[]}];
     }else{
-      this.seleccion = this.seleccion.filter(c=> c._id!==cancion._id);
+      this.seleccion = this.seleccion.filter(c=> c.id!==cancion.id);
     }  
   }
 

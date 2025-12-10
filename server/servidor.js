@@ -6,7 +6,8 @@ import { fileURLToPath } from "node:url";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import {Configuration} from "./services/configuration.js";
-import {RootService} from "./../ddbb/services/rootService.js";
+import {RootService} from "./services/rootService.js";
+import { Validaciones } from "./services/validaciones.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -75,7 +76,8 @@ export class Servidor{
       if(!req.session.superUsuario)  return res.status(401).send("No autorizado para esta accion");      
       const usuarioNuevo = req.body;    
       try{    
-        const idUsuarioNuevo = await this.#DBModel.creaUsuario(usuarioNuevo)     
+        Validaciones.validaUsuario(usuarioNuevo);
+        const idUsuarioNuevo = await this.#DBModel.users.creaUsuario(usuarioNuevo)     
         res.status(201).json({idUsuarioNuevo});    
       }catch(error){
         res.status(400).send(error.message);
@@ -89,9 +91,10 @@ export class Servidor{
   
       const {username, password} = req.body;
   
-      try{  
-        const usuarioVerificado = await this.#DBModel.logIn({username, password});
-        const token = jwt.sign({id:usuarioVerificado._id, username: usuarioVerificado.username, superUsuario: usuarioVerificado.superUsuario}, this.#SECRET_JWT_KEY, {expiresIn: "1d"});
+      try{
+        Validaciones.validaUsuario({username, password});
+        const usuarioVerificado = await this.#DBModel.users.logIn({username, password});
+        const token = jwt.sign({id:usuarioVerificado.id, username: usuarioVerificado.username, superUsuario: usuarioVerificado.superUsuario}, this.#SECRET_JWT_KEY, {expiresIn: "1d"});
    
         res.status(200).cookie("control_token", token,{
           httpOnly: true,
@@ -147,7 +150,7 @@ export class Servidor{
 
       const {visible}=req.query;
       try{
-        const jams = await this.#DBModel.getJamsAll();
+        const jams = await this.#DBModel.jams.getJamsAll();
         if(visible){
             const jamsVisible = jams.filter(jam=> jam.visible);
             return res.status(200).send(jamsVisible); 
@@ -182,6 +185,7 @@ export class Servidor{
 
       try{
         const jam = req.body;
+        Validaciones.validaJam(jam);
         const jamNueva = await this.#DBModel.creaJam(jam);
         return res.status(201).json(jamNueva);
       }catch(error){
@@ -242,6 +246,7 @@ export class Servidor{
       if(!req.session.username) return res.status(401).send("No autorizado para esta accion");
       try{
         const cancion = {...req.body};
+        Validaciones.validaCancion(cancion);
         const cancionNueva = await this.#DBModel.creaCancion(cancion);
         return res.status(201).json({ok: true, cancionNueva});
       }catch(error){
@@ -257,7 +262,7 @@ export class Servidor{
 
       try{
         const {id, cancionBody} = req.body;
-
+        Validaciones.validaCancion(cancionBody);
         const cancionActualizada = await this.#DBModel.updateCancion(id, cancionBody);
 
         res.status(214).json(cancionActualizada);
@@ -277,7 +282,7 @@ export class Servidor{
       try{
         const id= req.params.id;
         await this.#DBModel.borraCancion(id);
-        res.status(200).json({message: "Cancion borrada correctamente"});
+        res.status(200).json({message: `Cancion con id "${id}" borrada correctamente`});
       }catch(error){
         throw error;
       }

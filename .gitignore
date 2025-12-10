@@ -7,3 +7,5 @@ ddbb/User.json
 ddbb/canciones.json
 
 .env
+
+ddbb/models/firestore-db/firebase-credentials.json

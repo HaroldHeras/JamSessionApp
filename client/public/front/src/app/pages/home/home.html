@@ -10,13 +10,13 @@
             <h4>"Aun no hay Jams programadas"</h4> 
         }
         <div class="card-container">            
-                @for(jam of jams$ |async; track jam._id){
+                @for(jam of jams$ |async; track jam.id){
                     <mat-card>
                         <mat-card-header>
                             <mat-card-title>{{jam.nombre}}</mat-card-title>
                         </mat-card-header>
                         <mat-card-actions>                        
-                            <button matButton="elevated" [routerLink]="['/publicJam', jam._id]" title="Entrar a {{jam.nombre}}">ENTRAR</button> 
+                            <button matButton="elevated" [routerLink]="['/publicJam', jam.id]" title="Entrar a {{jam.nombre}}">ENTRAR</button> 
                         </mat-card-actions>
                     </mat-card>
                 }

@@ -21,23 +21,23 @@
     @else {
 
       <ul>
-          @for(jam of jams$ |async; track jam._id){
+          @for(jam of jams$ |async; track jam.id){
               
               <li>
-                  <button matButton="elevated" [routerLink]="['/jamController/jam', jam._id]" title="Abrir {{jam.nombre}}">
+                  <button matButton="elevated" [routerLink]="['/jamController/jam', jam.id]" title="Abrir {{jam.nombre}}">
                       {{jam.nombre}}
                   </button>
                   <div class="settings-buttons">
                     @if (jam.visible) {
-                        <button matButton="elevated" (click)="switchJam(jam._id, jam.visible)" title="Ocultar">
+                        <button matButton="elevated" (click)="switchJam(jam.id, jam.visible)" title="Ocultar">
                          <mat-icon>visibility</mat-icon>
                         </button>
                     }@else {
-                        <button matButton="elevated" (click)="switchJam(jam._id, jam.visible)" title="Hacer visible">
+                        <button matButton="elevated" (click)="switchJam(jam.id, jam.visible)" title="Hacer visible">
                           <mat-icon>visibility_off</mat-icon>
                         </button>
                     }
-                    <button matButton="elevated" (click)="modalDelete(jam.nombre, jam._id, 'important')" title="Borrar">
+                    <button matButton="elevated" (click)="modalDelete(jam.nombre, jam.id, 'important')" title="Borrar">
                         <mat-icon>delete</mat-icon>
                     </button>
                   </div>

@@ -112,10 +112,13 @@ export class JamForm {
 
   creaJam():void{
       const jam = {
+        visible: false,
+        activated: false,
         nombre:this.nombre,
         fecha: this.fecha,
         instrumentos: this.instrumentos(),
-        ubicacion:this.ubicacion
+        ubicacion:this.ubicacion,
+        canciones: []
       }    
       this.jams.crearJam(jam).subscribe({
         next: (response:HttpResponse<Jam>)=>{

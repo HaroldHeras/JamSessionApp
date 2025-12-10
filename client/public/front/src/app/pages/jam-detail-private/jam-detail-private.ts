@@ -58,7 +58,7 @@ export class JamDetailPrivate implements OnInit {
           result => {
               if(result!==undefined){
                 const cancionesActualizadas = [...this.jam().canciones!, ...result]
-                this.jams.updateJam(this.jam()._id!, {canciones:cancionesActualizadas}).subscribe({
+                this.jams.updateJam(this.jam().id!, {canciones:cancionesActualizadas}).subscribe({
                   next: (response:HttpResponse<Jam>)=>{
                     if(response.status===214){
                       this.jam.set(response.body!)

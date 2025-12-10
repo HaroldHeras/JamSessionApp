@@ -63,7 +63,7 @@ export class Jams {
 
         const jams = this.privateJamSubject.getValue();
         const jamsActualizadas = jams.map((j)=>{
-          if(j._id===id && res.body) return res.body
+          if(j.id===id && res.body) return res.body
           return j
         })
         this.privateJamSubject.next(jamsActualizadas)
@@ -76,7 +76,7 @@ export class Jams {
     return this.http.delete<string>("/jam/"+id).pipe(
       tap((res)=> {
         const jams = this.privateJamSubject.getValue();
-        const jamsActualizadas = jams.filter((j)=> j._id !== id)
+        const jamsActualizadas = jams.filter((j)=> j.id !== id)
         this.privateJamSubject.next(jamsActualizadas)
       })
     );

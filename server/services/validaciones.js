@@ -6,7 +6,9 @@
 
 export class Validaciones{
 
-    static validaUsuario(username, password){
+    static validaUsuario(usuario){
+
+        const {username, password} = usuario;
 
         if(typeof username!== "string") throw new Error("El nombre de usuario debe ser de tipo alfanumérico");
         if(username.trim().length < 6) throw new Error("El nombre de usuario debe contener mínimo 6 carácteres")
