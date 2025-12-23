@@ -48,6 +48,7 @@ El objetivo del proyecto es ofrecer una experiencia fluida, moderna y atractiva 
 - JWT para autenticación
 - BBDD locales y externas
 - CORS, Cookies HTTP-only, SameSite controlado
+- Firestore(Firebase)
 
 ## 🧠 Aprendizaje y objetivos
 
@@ -111,7 +112,6 @@ ROOT_PASS="(escribe aqui tu ROOT_PASS)"
     -​​ Mejora del sistema de registro de usuarios.
     - Implementación de roles en los diferentes usuarios registrados.
     - Mejoras UX con animaciones e interacciones visuales
-    - Integración de BBDD externas
 
 ## 🏁 Licencia
 Este proyecto se distribuye bajo la licencia MIT.
